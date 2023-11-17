@@ -1,4 +1,3 @@
-
 const RegistrationPage = () => {
     return (
         <div>

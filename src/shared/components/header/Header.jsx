@@ -10,7 +10,7 @@ function Header() {
     useNavigate();
 
     return (
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-body-tertiary shadow p-3 mb-5 bg-body rounded">
             <Container>
                 <Navbar.Brand>Блог №415</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />

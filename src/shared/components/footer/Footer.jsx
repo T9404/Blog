@@ -1,5 +1,4 @@
 import styles from './style.module.css';
-import {useState} from "react";
 function Footer() {
 
     /*const [place, setPlace] = useState({

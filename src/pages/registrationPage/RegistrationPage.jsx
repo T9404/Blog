@@ -1,6 +1,9 @@
 import {redirect} from "react-router-dom";
 import {useState} from "react";
 import register from "../../shared/api/register/Registration";
+import "react-datepicker/dist/react-datepicker.css";
+import styles from './style.module.css';
+
 
 const RegistrationPage = () => {
     const [form, setForm] = useState({
@@ -8,20 +11,15 @@ const RegistrationPage = () => {
         password: '',
         fullName: '',
         birthDate: '',
-        gender: '',
+        gender: 'Male',
         phoneNumber: ''
     });
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [birthDate, setBirthDate] = useState('');
-    const [gender, setGender] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
+
     const [error, setError] = useState('');
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const result = register(fullName, email, password, birthDate, gender, phoneNumber);
+        const result = register(form);
         if (!result.error) {
             console.log(result.message);
             redirect('/');
@@ -31,78 +29,93 @@ const RegistrationPage = () => {
         }
     };
 
-    /*const handleChange = e => {
-        switch (e.currentTarget.name) {
-            case 'email':
-                setEmail(e.currentTarget.value);
-                break;
-            case 'fullName':
-                setFullName(e.currentTarget.value);
-                break;
-            case 'password':
-                setForm({...form, password:e.currentTarget.value});
-                break;
-            case 'birthDate':
-                setBirthDate(e.currentTarget.value);
-                break;
-            case 'gender':
-                setGender(e.currentTarget.value);
-                break;
-            case 'phoneNumber':
-                setPhoneNumber(e.currentTarget.value);
-                break;
-        }
-    };*/
-
     return (
-        <form onSubmit={handleSubmit}>
-            <h3>Sign Up</h3>
-            {error && <p className="error-message">{error}</p>}
-            <div className="mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="First name"
-                    name="firstname"
-                    onChange={e => setForm({...form, fullName:e.currentTarget.value})}
-                />
-            </div>
-            <div className="mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    name="lastname"
-                    placeholder="Last name"
-                    onChange={e => setForm({...form, fullName:e.currentTarget.value})}
-                />
-            </div>
-            <div className="mb-3">
-                <input
-                    type="email"
-                    className="form-control"
-                    placeholder="Enter email"
-                    name="email"
-                    onChange={(e) => setForm({...form, email:e.currentTarget.value})}
-                />
-            </div>
-            <div className="mb-3">
-                <input
-                    type="password"
-                    className="form-control"
-                    placeholder="Enter password"
-                    name="password"
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="d-grid">
-                <button type="submit" className="btn btn-primary">
-                    Sign Up
-                </button>
-            </div>
-            <p className="forgot-password text-right">
-                Already registered <a href="/login">sign in?</a>
-            </p>
-        </form>
+        <div className={`mx-auto my-auto ${styles.registerForm}`}>
+            <form onSubmit={handleSubmit} className="shadow p-3 mb-5 bg-body rounded">
+                <h3>Регистрация</h3>
+                {error && <p className="error-message">{error}</p>}
+                <label htmlFor="exampleFullName1" className="form-label">ФИО</label>
+                <div className="mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Иванов Иван Иванович"
+                        name="fullName"
+                        onChange={e => setForm({...form, fullName: e.currentTarget.value})}
+                    />
+                </div>
+
+                <label htmlFor="exampleDateBirth1" className="form-label">
+                    Дата рождения
+                </label>
+                <div className="mb-3">
+                    <input
+                        id="startDate"
+                        className="form-control"
+                        type="date"
+                        onChange={e => setForm({...form, birthDate: e.currentTarget.value})}
+                    />
+                </div>
+
+                <label htmlFor="exampleGender1" className="form-label">
+                    Пол
+                </label>
+                <div className="mb-3">
+                    <select
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={e => setForm({...form, gender: e.currentTarget.value})}
+                    >
+                        <option selected value="Male">Мужчина</option>
+                        <option value="Female">Женщина</option>
+                    </select>
+                </div>
+
+
+                <label htmlFor="phoneNumber1" className="form-label">
+                    Телефон
+                </label>
+                <div className="mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        name="phoneNumber"
+                        placeholder="+7 (xxx) xxx-xx-xx"
+                        onChange={e => setForm({...form, phoneNumber: e.currentTarget.value})}
+                    />
+                </div>
+
+                <label htmlFor="email1" className="form-label">
+                    Email
+                </label>
+                <div className="mb-3">
+                    <input
+                        type="email"
+                        className="form-control"
+                        placeholder="Enter email"
+                        name="email"
+                        onChange={(e) => setForm({...form, email: e.currentTarget.value})}
+                    />
+                </div>
+
+                <label htmlFor="email1" className="form-label">
+                    Password
+                </label>
+                <div className="mb-3">
+                    <input
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        onChange={(e) => setForm({...form, password: e.currentTarget.value})}
+                    />
+                </div>
+                <div className="d-grid">
+                    <button type="submit" className="btn btn-primary">
+                        Зарегистрироваться
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 }
 

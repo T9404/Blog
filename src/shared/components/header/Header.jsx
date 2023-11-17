@@ -4,8 +4,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import {useNavigate} from "react-router-dom";
 import Logout from "../logout/Logout";
 
-
-
 function Header() {
     const authenticated = !!localStorage.getItem('my-key');
 

@@ -3,6 +3,7 @@ import RegistrationPage from "../pages/registrationPage/RegistrationPage";
 import HomePage from "../pages/homePage/HomePage";
 import Header from "../shared/components/header/Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Footeer from "../shared/components/footer/Footer";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
                   <Route path="/registration" element={<RegistrationPage />}/>
               </Routes>
           </div>
+          <Footeer />
       </>
   );
 }

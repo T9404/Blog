@@ -17,6 +17,11 @@ function Header() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link href="/">Главная</Nav.Link>
+                        {authenticated ? (
+                            <Nav.Link href="/post/create">Написать пост</Nav.Link>
+                        ) : (
+                            <></>
+                        )}
                     </Nav>
                     <Nav className="ml-auto">
                         {authenticated ? (

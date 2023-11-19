@@ -9,7 +9,6 @@ const Authorize = () => {
     return (
         <NavDropdown title={localStorage.getItem('email')} id="basic-nav-dropdown">
             <NavDropdown.Item onClick={() => navigate("/profile")}>Профиль</NavDropdown.Item>
-            <NavDropdown.Divider />
             <NavDropdown.Item onClick={logout}>Выйти</NavDropdown.Item>
         </NavDropdown>
     );

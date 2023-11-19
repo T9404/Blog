@@ -3,9 +3,13 @@ import axios from 'axios';
 
 const BASE_URL = 'https://blog.kreosoft.space/api';
 
-export const fetchPosts = () => async (dispatch) => {
+export const fetchPosts = (page, pageSize) => async (dispatch) => {
     try {
         const response = await axios.get(`${BASE_URL}/post`, {
+            params: {
+                page: page,
+                pageSize: pageSize,
+            },
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             }

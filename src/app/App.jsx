@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from "../shared/components/footer/Footer";
 import LoginPage from "../pages/loginPage/LoginPage";
 import ProfilePage from "../pages/profilePage/ProfilePage";
+import PrivateRoute from "../util/PrivateRoute";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
           <Header />
           <div className="container">
               <Routes>
-                  <Route path="/" element={<HomePage />} />
+                  <Route element={<PrivateRoute />} >
+                      <Route path="/" element={<HomePage />} />
+                  </Route>
                   <Route path="/registration" element={<RegistrationPage />}/>
                   <Route path="/login" element={<LoginPage />}/>
                   <Route path="/profile" element={<ProfilePage />} />

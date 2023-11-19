@@ -2,10 +2,10 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {useNavigate} from "react-router-dom";
-import Logout from "../logout/Logout";
+import Authorize from "../authorize/Authorize";
 
 function Header() {
-    const authenticated = !!localStorage.getItem('my-key');
+    const authenticated = !!localStorage.getItem('token');
 
     useNavigate();
 
@@ -21,7 +21,7 @@ function Header() {
                     <Nav className="ml-auto">
                         {authenticated ? (
                             <>
-                                <Nav.Link><Logout /></Nav.Link>
+                                <Nav.Link><Authorize /></Nav.Link>
                             </>
                         ) : (
                             <>

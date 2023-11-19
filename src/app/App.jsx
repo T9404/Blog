@@ -5,6 +5,7 @@ import Header from "../shared/components/header/Header";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from "../shared/components/footer/Footer";
 import LoginPage from "../pages/loginPage/LoginPage";
+import ProfilePage from "../pages/profilePage/ProfilePage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/registration" element={<RegistrationPage />}/>
                   <Route path="/login" element={<LoginPage />}/>
+                  <Route path="/profile" element={<ProfilePage />} />
               </Routes>
           </div>
           <Footer />

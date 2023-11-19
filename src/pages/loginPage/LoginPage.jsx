@@ -6,20 +6,19 @@ import styles from './style.module.css';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
-
 
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log("handleSubmit")
         try {
             const result = await login(email, password);
 
-            if (result.accesstoken) {
-                localStorage.setItem('my-key', result.accesstoken);
-                localStorage.setItem('username', 'user');
+            console.log(result);
+            if (result.token) {
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('email', email);
                 await navigate('/');
             } else {
                 setError('Authentication failed. Please check your email and password.');
@@ -29,18 +28,9 @@ const LoginPage = () => {
         }
     };
 
-    const handleChange = e => {
-        console.log("handleChange")
-        if (e.currentTarget.name === 'email') {
-            setEmail(e.currentTarget.value);
-        } else {
-            setPassword(e.currentTarget.value);
-        }
-    };
-
     return (
         <div className={`mx-auto my-auto ${styles.loginForm}`}>
-            <form onSubmit={handleChange} className="shadow p-3 mb-5 bg-body rounded">
+            <form onSubmit={handleSubmit} className="shadow p-3 mb-5 bg-body rounded">
                 <h3>Вход</h3>
                 {error && <p className="error-message">{error}</p>} {}
                 <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
@@ -48,7 +38,7 @@ const LoginPage = () => {
                     <input
                         type="email"
                         name="email"
-                        onChange={handleChange}
+                        onChange={e => setEmail(e.currentTarget.value)}
                         autoComplete="email"
                         className="form-control"
                         placeholder="name@example.com"
@@ -58,7 +48,7 @@ const LoginPage = () => {
                 <div className="mb-3">
                     <input
                         value={password}
-                        onChange={handleChange}
+                        onChange={e => setPassword(e.currentTarget.value)}
                         type="password"
                         name="password"
                         autoComplete="current-password"

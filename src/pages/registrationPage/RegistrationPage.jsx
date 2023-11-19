@@ -1,4 +1,4 @@
-import {redirect} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import register from "../../shared/api/register/Registration";
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,25 +15,66 @@ const RegistrationPage = () => {
         phoneNumber: ''
     });
 
-    const [error, setError] = useState('');
+    const [error, setError] = useState([]);
+    const navigate = useNavigate();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const result = register(form);
-        if (!result.error) {
-            console.log(result.message);
-            redirect('/');
-        } else {
-            setError('Authentication failed.')
-            console.log(result.error);
+
+        const validationErrors = validate(form);
+        if (Object.keys(validationErrors).length > 0) {
+            setError(Object.values(validationErrors));
+            return;
+        }
+
+        try {
+            const result = await register(form);
+            if (!result.error) {
+                localStorage.setItem('token', result.token);
+                localStorage.setItem('email', form.email);
+                await navigate('/');
+            } else {
+                setError(['Registration failed. Please check your data.']);
+            }
+        } catch (error) {
+            setError(['Registration failed. Please check your data.']);
         }
     };
+
+    const validate = (values)=>{
+        const errors = {};
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+        const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/i;
+        const passwordRegex = /^.*\d.*$/i;
+
+        if (!emailRegex.test(values.email)) {
+            errors.email = 'Неверный формат email\n';
+        }
+
+        if (!phoneRegex.test(values.phoneNumber)) {
+            errors.phoneNumber = 'Неверный формат телефона\n';
+        }
+
+        if (!passwordRegex.test(values.password)) {
+            errors.password = 'Пароль должен содержать хотя бы одну цифру\n';
+        }
+
+        return errors;
+    };
+
+
 
     return (
         <div className={`mx-auto my-auto ${styles.registerForm}`}>
             <form onSubmit={handleSubmit} className="shadow p-3 mb-5 bg-body rounded">
                 <h3>Регистрация</h3>
-                {error && <p className="error-message">{error}</p>}
+                {error && (
+                    <div className="error-message" style={{ color: 'red' }}>
+                        {Object.values(error).map((errorMsg, index) => (
+                            <p key={index}>{errorMsg}</p>
+                        ))}
+                    </div>
+                )}
                 <label htmlFor="exampleFullName1" className="form-label">ФИО</label>
                 <div className="mb-3">
                     <input
@@ -42,6 +83,7 @@ const RegistrationPage = () => {
                         placeholder="Иванов Иван Иванович"
                         name="fullName"
                         onChange={e => setForm({...form, fullName: e.currentTarget.value})}
+                        required
                     />
                 </div>
 
@@ -54,6 +96,7 @@ const RegistrationPage = () => {
                         className="form-control"
                         type="date"
                         onChange={e => setForm({...form, birthDate: e.currentTarget.value})}
+                        required
                     />
                 </div>
 
@@ -82,6 +125,7 @@ const RegistrationPage = () => {
                         name="phoneNumber"
                         placeholder="+7 (xxx) xxx-xx-xx"
                         onChange={e => setForm({...form, phoneNumber: e.currentTarget.value})}
+                        required
                     />
                 </div>
 
@@ -95,6 +139,7 @@ const RegistrationPage = () => {
                         placeholder="Enter email"
                         name="email"
                         onChange={(e) => setForm({...form, email: e.currentTarget.value})}
+                        required
                     />
                 </div>
 
@@ -107,6 +152,7 @@ const RegistrationPage = () => {
                         className="form-control"
                         name="password"
                         onChange={(e) => setForm({...form, password: e.currentTarget.value})}
+                        required
                     />
                 </div>
                 <div className="d-grid">

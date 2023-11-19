@@ -1,21 +1,16 @@
+import axios from 'axios';
+
 const BASE_URL = 'https://blog.kreosoft.space/api';
 
 const login = async (email, password) => {
     try {
-        const response = await fetch(`${BASE_URL}/login`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
+        const response = await axios.post(`${BASE_URL}/account/login`, {
+            email: email,
+            password: password,
         });
 
-        if (response.ok) {
-            return await response.json();
+        if (response.status === 200) {
+            return response.data;
         }
     } catch (error) {
         throw error;

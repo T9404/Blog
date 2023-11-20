@@ -14,8 +14,7 @@ const LoginPage = () => {
         e.preventDefault();
         try {
             const result = await login(email, password);
-
-            console.log(result);
+            
             if (result.token) {
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('email', email);

@@ -1,7 +1,8 @@
 import { setPosts, setLoading, setError } from '../reducers/postsSlice';
 import axios from 'axios';
+import qs from 'qs';
 
-const BASE_URL = 'https://blog.kreosoft.space/api'; /////////////перевести теги в uuid как api
+const BASE_URL = 'https://blog.kreosoft.space/api';
 
 export const fetchPosts = (page, paramForm) => async (dispatch) => {
     try {
@@ -12,14 +13,18 @@ export const fetchPosts = (page, paramForm) => async (dispatch) => {
                 author: paramForm.searchQuery,
                 min: paramForm.minReadingTime,
                 max: paramForm.maxReadingTime,
-                sort: paramForm.sortOption
+                sort: paramForm.sortOption,
+                tags: paramForm.tags,
+            },
+            paramsSerializer: (params) => {
+                return qs.stringify(params, { arrayFormat: 'repeat' });
             },
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             }
         });
         
-        console.log(paramForm.pageSize)
+        console.log(paramForm.tags.join(','));
 
         if (response.status === 200) {
             dispatch(setPosts(response.data));

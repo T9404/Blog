@@ -5,6 +5,7 @@ import { setLoading } from '../../store/reducers/postsSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import PostElement from "../../shared/components/postElement/PostElement";
+import tagConverter from "../../shared/components/tagConverter/TagConverter";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -20,36 +21,32 @@ const HomePage = () => {
         sortOption: '',
         minReadingTime: '',
         maxReadingTime: '',
-        pageSize: 5
+        pageSize: 5,
+        tags: []
     });
     
-    
-    
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const page = params.get('page') || 1;
-        // const pageSize = params.get('pageSize') || 5;
-        
         dispatch(fetchPosts(page, form));
-    }, [dispatch, location.search, form]);
-    
-    const handlePageChange = (page) => {
-        navigate(`/?page=${page}&pageSize=${form.pageSize}&search=${form.searchQuery}&sort=${form.sortOption}&minTime=${form.minReadingTime}&maxTime=${form.maxReadingTime}`);
-    };
-    
-    useEffect(() => {
-        console.log("useEffect")
-        const params = new URLSearchParams(location.search);
-        const page = params.get('page') || 1;
-        const pageSize = params.get('pageSize') || 5;
         
         const token = localStorage.getItem('token');
         if (token) {
             setAuthenticated(true);
         }
-        
-        dispatch(fetchPosts(page, pageSize));
-    }, [dispatch, location.search]);
+    }, [dispatch, location.search, form]);
+    
+    // по идеи должно строиться по параметрам из формы
+    const handlePageChange = (page) => {
+        navigate(`/?page=${page}&pageSize=${form.pageSize}&search=${form.searchQuery}&sort=${form.sortOption}&minTime=${form.minReadingTime}&maxTime=${form.maxReadingTime}`);
+    };
+    
+    // обработка введенных в форму тегов
+    const handleTagsChange = async (e) => {
+        const selectedOptions = Array.from(e.target.selectedOptions).map(option => option.value);
+        const idTags = await tagConverter(selectedOptions);
+        setForm({...form, tags: idTags});
+    }
     
     if (!posts || !posts.length) {
         setLoading(true);
@@ -89,10 +86,23 @@ const HomePage = () => {
                         />
                     </div>
                     <div className="p-2 flex-fill bd-highlight">
-                        <select className="form-select" aria-label="Default select example">
-                            <option value="1">Комп железо</option>
-                            <option value="2">По другим признакам</option>
-                            <option value="3">По другим признакам</option>
+                        <select
+                            className="form-select"
+                            aria-label="Default select example"
+                            multiple={true}
+                            onChange={handleTagsChange}
+                        >
+                            <option value="интернет">Интернет</option>
+                            <option value="история">История</option>
+                            <option value="еда">Еда</option>
+                            <option value="18+">18+</option>
+                            <option value="приколы">Приколы</option>
+                            <option value="it">IT</option>
+                            <option value="теория_заговора">Теория заговора</option>
+                            <option value="соцсети">Соцсети</option>
+                            <option value="косплей">Косплей</option>
+                            <option value="преступление">Преступление</option>
+                            
                         </select>
                     </div>
                 </div>

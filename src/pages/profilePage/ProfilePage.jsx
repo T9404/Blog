@@ -32,7 +32,6 @@ const ProfilePage = () => {
                     gender: data.gender,
                     birthDate: formattedBirthDate.toISOString().split('T')[0],
                 }));
-                console.log(data.phoneNumber)
             } catch (error) {
                 setError(['Profile loading failed. Please log in']);
                 localStorage.clear();

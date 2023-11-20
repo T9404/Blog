@@ -34,14 +34,31 @@ const HomePage = () => {
         if (token) {
             setAuthenticated(true);
         }
+        handlePageChange(page);
     }, [dispatch, location.search, form]);
     
-    // по идеи должно строиться по параметрам из формы
     const handlePageChange = (page) => {
-        navigate(`/?page=${page}&pageSize=${form.pageSize}&search=${form.searchQuery}&sort=${form.sortOption}&minTime=${form.minReadingTime}&maxTime=${form.maxReadingTime}`);
+        const queryParams = {
+            page: page,
+            pageSize: form.pageSize,
+            search: form.searchQuery || undefined,
+            sort: form.sortOption || undefined,
+            minTime: form.minReadingTime || undefined,
+            maxTime: form.maxReadingTime || undefined,
+        };
+        
+        const queryString = Object.entries(queryParams)
+            .filter(([value]) => value !== undefined)
+            .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+            .join('&');
+        
+        const tagsQueryString = Array.isArray(form.tags) && form.tags.length > 0
+            ? form.tags.map(tag => `tags=${encodeURIComponent(tag)}`).join('&')
+            : '';
+        
+        navigate(`/?${queryString}${tagsQueryString ? `&${tagsQueryString}` : ''}`);
     };
     
-    // обработка введенных в форму тегов
     const handleTagsChange = async (e) => {
         const selectedOptions = Array.from(e.target.selectedOptions).map(option => option.value);
         const idTags = await tagConverter(selectedOptions);

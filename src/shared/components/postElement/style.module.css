@@ -1,0 +1,7 @@
+.grayText {
+    color: rgb(124, 123, 123);
+}
+
+.grayText:hover {
+    color: rgb(72, 68, 68);
+}

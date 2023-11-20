@@ -14,7 +14,7 @@ const RegistrationPage = () => {
         gender: 'Male',
         phoneNumber: ''
     });
-
+    
     const [error, setError] = useState([]);
     const navigate = useNavigate();
 

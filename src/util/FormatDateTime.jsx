@@ -8,8 +8,14 @@ function formatDateTime(timestamp) {
         hour12: false,
     };
     
-    const formattedDate = new Intl.DateTimeFormat('ru-RU', options).format(new Date(timestamp));
-    return formattedDate.replace(',', '').replaceAll("/", ".");
+    try {
+        const formattedDate = new Intl.DateTimeFormat('ru-RU', options).format(new Date(timestamp));
+        return formattedDate.replace(',', '').replaceAll("/", ".");
+    }
+    catch (e) {
+        console.log(e);
+        console.log(timestamp);
+    }
 }
 
 export default formatDateTime;

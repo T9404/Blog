@@ -13,7 +13,7 @@ export const fetchPosts = (page, paramForm) => async (dispatch) => {
                 author: paramForm.searchQuery,
                 min: paramForm.minReadingTime,
                 max: paramForm.maxReadingTime,
-                sort: paramForm.sortOption,
+                sorting: paramForm.sorting,
                 tags: paramForm.tags,
             },
             paramsSerializer: (params) => {

@@ -18,7 +18,7 @@ const HomePage = () => {
     
     const [form, setForm] = useState({
         searchQuery: '',
-        sortOption: '',
+        sorting: 'CreateDesc',
         minReadingTime: '',
         maxReadingTime: '',
         pageSize: 5,
@@ -42,13 +42,15 @@ const HomePage = () => {
             page: page,
             pageSize: form.pageSize,
             search: form.searchQuery || undefined,
-            sort: form.sortOption || undefined,
+            sorting: form.sorting || undefined,
             minTime: form.minReadingTime || undefined,
             maxTime: form.maxReadingTime || undefined,
         };
         
+        // Remove undefined values from queryParams
+        Object.keys(queryParams).forEach(key => queryParams[key] === undefined && delete queryParams[key]);
+        
         const queryString = Object.entries(queryParams)
-            .filter(([value]) => value !== undefined)
             .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
             .join('&');
         
@@ -56,7 +58,10 @@ const HomePage = () => {
             ? form.tags.map(tag => `tags=${encodeURIComponent(tag)}`).join('&')
             : '';
         
-        navigate(`/?${queryString}${tagsQueryString ? `&${tagsQueryString}` : ''}`);
+        // Remove undefined values from tagsQueryString
+        const cleanedTagsQueryString = tagsQueryString.replace(/&undefined/g, '');
+        
+        navigate(`/?${queryString}${cleanedTagsQueryString ? `&${cleanedTagsQueryString}` : ''}`);
     };
     
     const handleTagsChange = async (e) => {
@@ -132,7 +137,7 @@ const HomePage = () => {
                         <select
                             className="form-select"
                             aria-label="Default select example"
-                            onChange={e => setForm({...form, sortOption: e.currentTarget.value})}
+                            onChange={e => setForm({...form, sorting: e.currentTarget.value})}
                         >
                             <option value="CreateDesc">По дате создания (сначала новые)</option>
                             <option value="CreateAsc">По дате создания (сначала старые)</option>
@@ -187,7 +192,7 @@ const HomePage = () => {
                 <>
                     {<ul>
                         {posts.posts.map((post) => (
-                            <PostElement key={post.id} post={post} />
+                            <PostElement key={post.id} posts={post} />
                         ))}
                     </ul>}
                     

@@ -20,9 +20,12 @@ const CustomPagination = ({ currentPage, onPageChange, totalPages }) => {
     
     const renderPageNumbers = () => {
         const maxVisiblePages = 3;
+        const middlePage = Math.ceil(maxVisiblePages / 2);
+        const startPage = Math.max(1, currentPage - middlePage + 1);
+        const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
         
         const items = [];
-        for (let number = 1; number <= Math.min(totalPages, maxVisiblePages); number++) {
+        for (let number = startPage; number <= endPage; number++) {
             items.push(
                 <Pagination.Item
                     key={number}

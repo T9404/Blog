@@ -5,7 +5,8 @@ import formatDateTime from "../../util/FormatDateTime";
 import styles from "../../shared/components/postElement/style.module.css";
 import {setLoading} from "../../store/reducers/postsSlice";
 import getPost from "../../shared/api/posts/Post";
-import GroupComments from "../../shared/components/comment/GroupComments";
+import GroupComment from "../../shared/components/comment/GroupComment";
+import createComment from "../../shared/api/comment/CreateComment";
 
 const IndividualPostPage = () => {
     const navigate = useNavigate();
@@ -16,13 +17,15 @@ const IndividualPostPage = () => {
     const [loading, setLoading] = useState(true);
     const [showComments, setShowComments] = useState(location.hash === '#comments');
     
+    const [comment, setComment] = useState('');
+    
     
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch the post data using the getPost function
                 const postData = await getPost(id);
                 setPost(postData);
+                console.log(postData)
             } catch (error) {
                 console.error('Error fetching post:', error);
             } finally {
@@ -31,9 +34,9 @@ const IndividualPostPage = () => {
         };
         
         fetchData();
-    }, [id]);
+    }, [id, post]);
     
-    const handleCommentClick = () => {
+    const handleExpandComments = () => {
         setShowComments((prevShowComments) => !prevShowComments);
         
         const hashFragment = showComments ? '' : '#comments';
@@ -49,6 +52,21 @@ const IndividualPostPage = () => {
             }
         }
     }, [showComments]);
+    
+    
+    const handleCreateComment = async () => {
+        try {
+            const createdComment = await createComment(post.id, comment);
+            setPost((prevPost) => ({
+                ...prevPost,
+                comments: [...prevPost.comments, createdComment],
+                commentsCount: prevPost.commentsCount + 1,
+            }));
+            setComment('');
+        } catch (error) {
+            console.error('Error creating comment:', error);
+        }
+    };
     
     if (loading) {
         return <p>Loading...</p>;
@@ -66,6 +84,11 @@ const IndividualPostPage = () => {
                     {post.communityName && ` в сообществе "${post.communityName}"`}
                 </p>
                 <h4>{post.title}</h4>
+                
+                <div className="text-center">
+                <img src={post.image} className="rounded" alt="picture" />
+                </div>
+                
                 <p>{post.description}</p>
                 
                 <div>{post.tags.map((tag) => (
@@ -79,13 +102,24 @@ const IndividualPostPage = () => {
                 <p>Address in future</p>
                 
                 <div className="card-header d-sm-flex justify-content-between">
-                    <p className={`mb-0`} onClick={handleCommentClick}>&#128172; {post.commentsCount}</p>
+                    <p className={`mb-0`} onClick={handleExpandComments}>&#128172; {post.commentsCount}</p>
                     <p className="mb-0">&#10084;{post.likes}</p>
                 </div>
             </div>
             
             <div className="card">
-                {showComments && <GroupComments post={post} />}
+                {showComments && <GroupComment post={post} />}
+            </div>
+            
+            <div className="card">
+                <h3>Оставить комментарий</h3>
+                <form>
+                    <div className="mb-3">
+                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Комментарий</label>
+                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={e => setComment(e.target.value)} value={comment}></textarea>
+                    </div>
+                    <button type="submit" className="btn btn-primary" onClick={handleCreateComment}>Отправить</button>
+                </form>
             </div>
         </>
     );

@@ -2,18 +2,16 @@ import React, {useState} from "react";
 import formatDateTime from "../../../util/FormatDateTime";
 import Comment from "./Comment";
 
-const GroupComments = (post) => {
+const GroupComment = (post) => {
     
-    
-    console.log(post.post);
     return (
         <div>
             <h3>Комментарии</h3>
             {post.post.comments.map((comment) => (
-                <Comment comment={comment} />
+                <Comment comment={comment} postId={post.post.id} />
             ))}
         </div>
     );
 }
 
-export default GroupComments;
+export default GroupComment;

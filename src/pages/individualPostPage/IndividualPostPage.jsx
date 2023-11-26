@@ -8,6 +8,8 @@ import getPost from "../../shared/api/posts/Post";
 import GroupComment from "../../shared/components/comment/group/GroupComment";
 import createComment from "../../shared/api/comment/CreateComment";
 import LikeComponent from "../../shared/components/like/LikeComponent";
+import Address from "../../shared/components/address/Address";
+import ConcreteAddress from "../../shared/components/address/Address";
 
 const IndividualPostPage = () => {
     const navigate = useNavigate();
@@ -99,7 +101,7 @@ const IndividualPostPage = () => {
                     <p>Время чтения {post.readingTime} мин.</p>
                 </div>
                 
-                <p>Address in future</p>
+                {post.addressId && <ConcreteAddress objectGuid={post.addressId} />}
                 
                 <div className="card-header d-sm-flex justify-content-between">
                     <p className={`mb-0`} onClick={handleExpandComments}>&#128172; {post.commentsCount}</p>

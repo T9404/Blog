@@ -71,8 +71,6 @@ const ConcreteComment = ({ comment, postId, isNested }) => {
     }, [comment.id, expanded, comment.subComments]);
     
     const handleReplySubmit = async (e) => {
-        e.preventDefault();
-        console.log(postId, replyContent, comment.id);
         try {
             await createComment(postId, replyContent, comment.id);
             setShowReplyForm(!showReplyForm);

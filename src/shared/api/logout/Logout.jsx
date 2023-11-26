@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const BASE_URL = 'https://blog.kreosoft.space/api';
 
@@ -11,7 +11,7 @@ const logout = async () => {
             }
         });
     } catch (error) {
-        console.error('Error during login:', error);
+        console.error('Error during logout:', error);
     }
 
     localStorage.clear();

@@ -2,9 +2,9 @@ import axios from 'axios';
 
 const BASE_URL = 'https://blog.kreosoft.space/api';
 
-const getPost = async (id) => {
+const deleteComment = async (commentId) => {
     try {
-        const response = await axios.get(`${BASE_URL}/post/${id}`, {
+        const response = await axios.delete(`${BASE_URL}/comment/${commentId}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
@@ -16,6 +16,6 @@ const getPost = async (id) => {
     } catch (error) {
         throw error;
     }
-};
+}
 
-export default getPost;
+export default deleteComment;

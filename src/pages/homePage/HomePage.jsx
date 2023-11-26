@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import PostElement from "../../shared/components/postElement/PostElement";
 import tagConverter from "../../shared/components/tagConverter/TagConverter";
+import getMyCommunity from "../../shared/api/community/GetMyCommunity";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const HomePage = () => {
         minReadingTime: '',
         maxReadingTime: '',
         pageSize: 5,
+        onlyMyCommunities: false,
         tags: []
     });
     
@@ -37,6 +39,7 @@ const HomePage = () => {
         handlePageChange(page);
     }, [dispatch, location.search, form]);
     
+    
     const handlePageChange = (page) => {
         const queryParams = {
             page: page,
@@ -44,10 +47,10 @@ const HomePage = () => {
             search: form.searchQuery || undefined,
             sorting: form.sorting || undefined,
             minTime: form.minReadingTime || undefined,
+            onlyMyCommunities: form.onlyMyCommunities || undefined,
             maxTime: form.maxReadingTime || undefined,
         };
         
-        // Remove undefined values from queryParams
         Object.keys(queryParams).forEach(key => queryParams[key] === undefined && delete queryParams[key]);
         
         const queryString = Object.entries(queryParams)
@@ -55,10 +58,8 @@ const HomePage = () => {
             .join('&');
         
         const tagsQueryString = Array.isArray(form.tags) && form.tags.length > 0
-            ? form.tags.map(tag => `tags=${encodeURIComponent(tag)}`).join('&')
-            : '';
+            ? form.tags.map(tag => `tags=${encodeURIComponent(tag)}`).join('&') : '';
         
-        // Remove undefined values from tagsQueryString
         const cleanedTagsQueryString = tagsQueryString.replace(/&undefined/g, '');
         
         navigate(`/?${queryString}${cleanedTagsQueryString ? `&${cleanedTagsQueryString}` : ''}`);
@@ -75,7 +76,6 @@ const HomePage = () => {
     }
     
     if (posts.posts) {
-        console.log(posts);
         setLoading(false);
     }
     
@@ -170,7 +170,9 @@ const HomePage = () => {
                             <input
                                 className="form-check-input"
                                 type="checkbox" value=""
-                                id="flexCheckDefault" />
+                                id="flexCheckDefault"
+                                onClick={e => setForm({...form, onlyMyCommunities: e.currentTarget.checked})}
+                            />
                             <label className="form-check-label" htmlFor="flexCheckDefault">
                                 Только мои группы
                             </label>

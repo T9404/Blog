@@ -5,8 +5,9 @@ import formatDateTime from "../../util/FormatDateTime";
 import styles from "../../shared/components/postElement/style.module.css";
 import {setLoading} from "../../store/reducers/postsSlice";
 import getPost from "../../shared/api/posts/Post";
-import GroupComment from "../../shared/components/comment/GroupComment";
+import GroupComment from "../../shared/components/comment/group/GroupComment";
 import createComment from "../../shared/api/comment/CreateComment";
+import LikeComponent from "../../shared/components/like/LikeComponent";
 
 const IndividualPostPage = () => {
     const navigate = useNavigate();
@@ -25,7 +26,6 @@ const IndividualPostPage = () => {
             try {
                 const postData = await getPost(id);
                 setPost(postData);
-                console.log(postData)
             } catch (error) {
                 console.error('Error fetching post:', error);
             } finally {
@@ -86,7 +86,7 @@ const IndividualPostPage = () => {
                 <h4>{post.title}</h4>
                 
                 <div className="text-center">
-                <img src={post.image} className="rounded" alt="picture" />
+                <img src={post.image} className="rounded img-fluid" alt="picture" />
                 </div>
                 
                 <p>{post.description}</p>
@@ -103,7 +103,7 @@ const IndividualPostPage = () => {
                 
                 <div className="card-header d-sm-flex justify-content-between">
                     <p className={`mb-0`} onClick={handleExpandComments}>&#128172; {post.commentsCount}</p>
-                    <p className="mb-0">&#10084;{post.likes}</p>
+                    <LikeComponent post={post} />
                 </div>
             </div>
             

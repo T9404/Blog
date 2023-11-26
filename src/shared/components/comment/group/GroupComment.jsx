@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import formatDateTime from "../../../util/FormatDateTime";
-import Comment from "./Comment";
+import formatDateTime from "../../../../util/FormatDateTime";
+import Comment from "../concrete/ConcreteComment";
 
 const GroupComment = (post) => {
     

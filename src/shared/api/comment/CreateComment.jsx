@@ -4,7 +4,6 @@ const BASE_URL = 'https://blog.kreosoft.space/api';
 
 const createComment = async (postId, content, parentId) => {
     try {
-        console.log(postId, content, parentId)
         const response = await axios.post(`${BASE_URL}/post/${postId}/comment`, {
             content: content,
             parentId: parentId,

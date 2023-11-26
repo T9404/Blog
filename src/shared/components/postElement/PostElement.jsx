@@ -2,6 +2,7 @@ import {useState} from "react";
 import formatDateTime from "../../../util/FormatDateTime";
 import styles from './style.module.css';
 import {useNavigate} from "react-router-dom";
+import LikeComponent from "../like/LikeComponent";
 
 function PostElement({ posts }) {
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ function PostElement({ posts }) {
             
             <div className="card-header d-sm-flex justify-content-between">
                 <p className={`${styles.link}mb-0`} onClick={handleCommentClick}>&#128172; {posts.commentsCount}</p>
-                <p className="mb-0">&#10084;{posts.likes}</p>
+                <LikeComponent post={posts} />
             </div>
         </div>
     );

@@ -14,6 +14,7 @@ export const fetchPosts = (page, paramForm) => async (dispatch) => {
                 min: paramForm.minReadingTime,
                 max: paramForm.maxReadingTime,
                 sorting: paramForm.sorting,
+                onlyMyCommunities: paramForm.onlyMyCommunities,
                 tags: paramForm.tags,
             },
             paramsSerializer: (params) => {
@@ -24,7 +25,7 @@ export const fetchPosts = (page, paramForm) => async (dispatch) => {
             }
         });
         
-        console.log(paramForm.tags.join(','));
+        console.log(paramForm);
 
         if (response.status === 200) {
             dispatch(setPosts(response.data));

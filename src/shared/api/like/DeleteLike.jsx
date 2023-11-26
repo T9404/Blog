@@ -2,20 +2,16 @@ import axios from 'axios';
 
 const BASE_URL = 'https://blog.kreosoft.space/api';
 
-const getPost = async (id) => {
+const deleteLike = async (postId) => {
     try {
-        const response = await axios.get(`${BASE_URL}/post/${id}`, {
+        await axios.delete(`${BASE_URL}/post/${postId}/like`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
         });
-        
-        if (response.status === 200) {
-            return response.data;
-        }
     } catch (error) {
         throw error;
     }
-};
+}
 
-export default getPost;
+export default deleteLike;

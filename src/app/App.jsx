@@ -8,6 +8,8 @@ import LoginPage from "../pages/loginPage/LoginPage";
 import ProfilePage from "../pages/profilePage/ProfilePage";
 import PrivateRoute from "../util/PrivateRoute";
 import IndividualPostPage from "../pages/individualPostPage/IndividualPostPage";
+import GroupPage from "../pages/groupPage/GroupPage";
+import AuthorPage from "../pages/authorPage/AuthorPage";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
                   <Route path="/" element={<HomePage/>}/>
                   <Route element={<PrivateRoute/>}>
                       <Route path="/profile" element={<ProfilePage/>}/>
+                      <Route path="/communities" element={<GroupPage/>}/>
+                      <Route path="/authors" element={<AuthorPage/>}/>
                   </Route>
                   <Route path="/registration" element={<RegistrationPage/>}/>
                   <Route path="/login" element={<LoginPage/>}/>

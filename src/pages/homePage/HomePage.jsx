@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import PostElement from "../../shared/components/postElement/PostElement";
 import tagConverter from "../../shared/components/tagConverter/TagConverter";
-import getMyCommunity from "../../shared/api/community/GetMyCommunity";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -30,7 +29,9 @@ const HomePage = () => {
     useEffect(() => {
         const params = new URLSearchParams(location.search);
         const page = params.get('page') || 1;
+        const search = params.get('search') || '';
         dispatch(fetchPosts(page, form));
+        
         
         const token = localStorage.getItem('token');
         if (token) {
@@ -105,6 +106,7 @@ const HomePage = () => {
                             aria-label="Recipient's username"
                             aria-describedby="button-addon2"
                             onChange={e => setForm({...form, searchQuery: e.currentTarget.value})}
+                            value={form.searchQuery}
                         />
                     </div>
                     <div className="p-2 flex-fill bd-highlight">

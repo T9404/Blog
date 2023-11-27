@@ -18,7 +18,11 @@ function Header() {
                     <Nav className="me-auto">
                         <Nav.Link href="/">Главная</Nav.Link>
                         {authenticated ? (
-                            <Nav.Link href="/post/create">Написать пост</Nav.Link>
+                            <>
+                                <Nav.Link href="/post/create">Написать пост</Nav.Link>
+                                <Nav.Link href="/communities">Сообщества</Nav.Link>
+                                <Nav.Link href="/authors">Авторы</Nav.Link>
+                            </>
                         ) : (
                             <></>
                         )}

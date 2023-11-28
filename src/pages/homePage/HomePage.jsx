@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPosts } from '../../store/action/fetchPosts';
 import { setLoading } from '../../store/reducers/postsSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import PostElement from "../../shared/components/postElement/PostElement";
 import tagConverter from "../../shared/components/tagConverter/TagConverter";
@@ -15,6 +15,7 @@ const HomePage = () => {
     const posts = useSelector((state) => state.posts.data);
     const loading = useSelector((state) => state.posts.loading);
     const [authenticated, setAuthenticated] = useState(false);
+    let [searchParams, setSearchParams] = useSearchParams();
     
     const [form, setForm] = useState({
         searchQuery: '',
@@ -27,19 +28,28 @@ const HomePage = () => {
     });
     
     useEffect(() => {
-        const params = new URLSearchParams(location.search);
-        const page = params.get('page') || 1;
-        const search = params.get('search') || '';
-        dispatch(fetchPosts(page, form));
+        const page = searchParams.get('page') || 1;
         
+        console.log(searchParams.get('search'));
+        
+        setForm({pageSize: Number(searchParams.get('pageSize')) || 5, tags: searchParams.getAll('tags') || [], searchQuery: searchParams.get('search'),
+            sorting: searchParams.get('sorting') || 'CreateDesc', minReadingTime: searchParams.get('minReadingTime') || '', maxReadingTime: searchParams.get('maxReadingTime') || '',
+            onlyMyCommunities: searchParams.get('onlyMyCommunities') || false});
+        
+        console.log("form + ", form.searchQuery)
+        
+        // dispatch(fetchPosts(page, form));
+        dispatch(fetchPosts(searchParams))
         
         const token = localStorage.getItem('token');
         if (token) {
             setAuthenticated(true);
         }
-        handlePageChange(page);
-    }, [dispatch, location.search, form]);
-    
+        handlePageChange(page)
+        setSearchParams(searchParams);
+        
+        
+    }, [dispatch, location.search]);
     
     const handlePageChange = (page) => {
         const queryParams = {
@@ -89,6 +99,7 @@ const HomePage = () => {
     }
     
     return (
+        // {availableAddresses.map((addresses) => (<dropDown  options={{addresses}/>))}
         <div>
             <div className="d-flex justify-content-between align-items-center">
                 <h1></h1>

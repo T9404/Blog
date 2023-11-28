@@ -52,6 +52,16 @@ const AuthorPage = () => {
         setBestAuthors(authorsCopy.sort(popularitySort).slice(0, 3));
     };
     
+    const getBadgeColorClass = (rating) => {
+        if (rating === 1) {
+            return 'bg-warning';
+        } else if (rating === 2) {
+            return 'bg-info';
+        } else {
+            return 'bg-success';
+        }
+    };
+    
     const isBestAuthor = (author) => {
         const index = bestAuthors.findIndex((bestAuthor) =>
             bestAuthor.fullName === author.fullName && bestAuthor.created === author.created
@@ -89,7 +99,9 @@ const AuthorPage = () => {
                                         Постов {author.posts}, Лайков {author.likes}
                                     </div>
                                     {isBestAuthor(author) && (
-                                        <div className="badge bg-success text-wrap">Лучший автор, Топ: {isBestAuthor(author)}</div>
+                                        <div className={`badge ${getBadgeColorClass(isBestAuthor(author))} text-wrap`}>
+                                            Лучший автор, Топ: {isBestAuthor(author)}
+                                        </div>
                                     )}
                                 </div>
                             </div>

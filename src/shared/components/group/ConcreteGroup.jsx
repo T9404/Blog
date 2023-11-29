@@ -1,5 +1,5 @@
-import subscribe from "./Subscribe";
-import unsubscribe from "./Unsubcribe";
+import subscribe from "../../api/group/Subscribe";
+import unsubscribe from "../../api/group/Unsubcribe";
 import {useState} from "react";
 
 const ConcreteGroup = ({ group }) => {

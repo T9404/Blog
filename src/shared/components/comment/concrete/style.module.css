@@ -10,3 +10,7 @@
     border-left: 2px solid #960f0f;
     padding-left: 10px;
 }
+
+.nested-comment {
+    margin-left: 20px;
+}

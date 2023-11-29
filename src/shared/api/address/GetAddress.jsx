@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const getAddressChain = async (objectGuid) => {
     try {
-        const response = await axios.get(`${BASE_URL}/address/chain`, {
+        const response = await axios.get(`${process.env.REACT_APP_API}/address/chain`, {
             params: {
                 objectGuid: objectGuid
             },

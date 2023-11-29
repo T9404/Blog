@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const getRole = async (id) => {
     try {
-        const response = await axios.get(`${BASE_URL}/community/${id}/role`, {
+        const response = await axios.get(`${process.env.REACT_APP_API}/community/${id}/role`, {
             params: {
                 id: id
             },

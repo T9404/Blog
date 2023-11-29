@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const updateProfile = async (form) => {
     try {
-        const response = await axios.put(`${BASE_URL}/account/profile`, {
+        const response = await axios.put(`${process.env.REACT_APP_API}/account/profile`, {
             email: form.email,
             fullName: form.fullName,
             birthDate: form.birthDate,

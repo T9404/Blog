@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const editComment = async (commentId, content) => {
     try {
-        const response = await axios.put(`${BASE_URL}/comment/${commentId}`, {
+        const response = await axios.put(`${process.env.REACT_APP_API}/comment/${commentId}`, {
             content: content,
         }, {
             headers: {

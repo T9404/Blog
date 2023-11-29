@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const deleteComment = async (commentId) => {
     try {
-        const response = await axios.delete(`${BASE_URL}/comment/${commentId}`, {
+        const response = await axios.delete(`${process.env.REACT_APP_API}/comment/${commentId}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },

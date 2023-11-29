@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const logout = async () => {
 
     try {
-        await axios.post(`${BASE_URL}/account/logout`, {
+        await axios.post(`${process.env.REACT_APP_API}/account/logout`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             }

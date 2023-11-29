@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const getPost = async (id) => {
     try {
-        const response = await axios.get(`${BASE_URL}/post/${id}`, {
+        const response = await axios.get(`${process.env.REACT_APP_API}/post/${id}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },

@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const register = async (form) => {
     try {
-        const response = await axios.post(`${BASE_URL}/account/register`, {
+        const response = await axios.post(`${process.env.REACT_APP_API}/account/register`, {
             fullName: form.fullName,
             email: form.email,
             password: form.password,

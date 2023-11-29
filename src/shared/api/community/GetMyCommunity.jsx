@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const getMyCommunity = async () => {
     try {
-        const response = await axios.get(`${BASE_URL}/community/my`, {
+        const response = await axios.get(`${process.env.REACT_APP_API}/community/my`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },

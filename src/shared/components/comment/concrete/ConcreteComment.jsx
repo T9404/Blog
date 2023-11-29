@@ -100,7 +100,7 @@ const ConcreteComment = ({ comment, postId, isNested }) => {
     }
     
     return (
-        <div key={comment.id} className={isNested ? "p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end" : ''}>
+        <div key={comment.id} className={isNested ? `border-start border-5 border-primary border-opacity-50 ms-5` : ''}>
             <p>{comment.deleteDate != null ? '[Комментарий удален]' : comment.author}</p>
             <p>{comment.deleteDate != null ? '[Комментарий удален]' : comment.content}
                 {comment.deleteDate == null && comment.modifiedDate && <span className={styles.grayText}>(изменено)</span>}</p>

@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import getAllGroups from "../../shared/api/group/GetGroups";
 import getRole from "../../shared/api/group/GetRole";
 import subscribe from "../../shared/api/group/Subscribe";
-import ConcreteGroup from "../../shared/api/group/ConcreteGroup";
+import ConcreteGroup from "../../shared/components/group/ConcreteGroup";
 import {useNavigate} from "react-router-dom";
 
 const GroupPage = () => {
@@ -28,8 +28,6 @@ const GroupPage = () => {
         
         fetchData();
     }, []);
-    
-    
     
     return (
         <div>

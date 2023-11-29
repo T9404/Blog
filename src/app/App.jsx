@@ -10,6 +10,7 @@ import PrivateRoute from "../util/PrivateRoute";
 import IndividualPostPage from "../pages/individualPostPage/IndividualPostPage";
 import GroupPage from "../pages/groupPage/GroupPage";
 import AuthorPage from "../pages/authorPage/AuthorPage";
+import PostCreationPage from "../pages/postCreationPage/PostCreationPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                       <Route path="/profile" element={<ProfilePage/>}/>
                       <Route path="/communities" element={<GroupPage/>}/>
                       <Route path="/authors" element={<AuthorPage/>}/>
+                      <Route path="/post/create" element={<PostCreationPage/>}/>
                   </Route>
                   <Route path="/registration" element={<RegistrationPage/>}/>
                   <Route path="/login" element={<LoginPage/>}/>

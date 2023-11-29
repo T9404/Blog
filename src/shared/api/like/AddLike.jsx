@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://blog.kreosoft.space/api';
-
 const addLike = async (postId) => {
     try {
-        await axios.post(`${BASE_URL}/post/${postId}/like`, {},
+        await axios.post(`${process.env.REACT_APP_API}/post/${postId}/like`, {},
             {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),

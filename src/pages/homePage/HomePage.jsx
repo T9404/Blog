@@ -30,15 +30,10 @@ const HomePage = () => {
     useEffect(() => {
         const page = searchParams.get('page') || 1;
         
-        console.log(searchParams.get('search'));
-        
         setForm({pageSize: Number(searchParams.get('pageSize')) || 5, tags: searchParams.getAll('tags') || [], searchQuery: searchParams.get('search'),
             sorting: searchParams.get('sorting') || 'CreateDesc', minReadingTime: searchParams.get('minReadingTime') || '', maxReadingTime: searchParams.get('maxReadingTime') || '',
             onlyMyCommunities: searchParams.get('onlyMyCommunities') || false});
         
-        console.log("form + ", form.searchQuery)
-        
-        // dispatch(fetchPosts(page, form));
         dispatch(fetchPosts(searchParams))
         
         const token = localStorage.getItem('token');
@@ -47,8 +42,6 @@ const HomePage = () => {
         }
         handlePageChange(page)
         setSearchParams(searchParams);
-        
-        
     }, [dispatch, location.search]);
     
     const handlePageChange = (page) => {
@@ -99,7 +92,6 @@ const HomePage = () => {
     }
     
     return (
-        // {availableAddresses.map((addresses) => (<dropDown  options={{addresses}/>))}
         <div>
             <div className="d-flex justify-content-between align-items-center">
                 <h1></h1>
@@ -195,7 +187,7 @@ const HomePage = () => {
                         <button
                             type="button"
                             className="btn btn-primary"
-                            onClick={() => {handlePageChange(1)}} //////////////////////////////////////////////////
+                            onClick={() => {handlePageChange(1)}}
                         >
                             Применить
                         </button>

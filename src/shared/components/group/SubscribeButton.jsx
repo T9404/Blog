@@ -2,13 +2,14 @@ import {useState} from "react";
 import subscribe from "../../api/group/Subscribe";
 import unsubscribe from "../../api/group/Unsubcribe";
 
-const SubscribeButton = ({ groupId, groupRole }) => {
+const SubscribeButton = ({ groupId, groupRole, onUpdateSubscribers }) => {
     const [isSubscribed, setIsSubscribed] = useState(groupRole === 'Subscriber');
     
     const subscribeToGroup = async () => {
         try {
             await subscribe(groupId);
             setIsSubscribed(true);
+            onUpdateSubscribers(1);
         } catch (error) {
             console.log(error);
         }
@@ -18,6 +19,7 @@ const SubscribeButton = ({ groupId, groupRole }) => {
         try {
             await unsubscribe(groupId);
             setIsSubscribed(false);
+            onUpdateSubscribers(-1);
         } catch (error) {
             console.log(error);
         }

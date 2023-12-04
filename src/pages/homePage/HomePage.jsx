@@ -6,6 +6,7 @@ import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import PostElement from "../../shared/components/postElement/PostElement";
 import tagConverter from "../../shared/components/tagConverter/TagConverter";
+import LoadingComponent from "../../shared/components/loading/Loading";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -84,11 +85,7 @@ const HomePage = () => {
     }
     
     if (loading) {
-        return (
-            <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </div>
-        );
+        return LoadingComponent();
     }
     
     return (

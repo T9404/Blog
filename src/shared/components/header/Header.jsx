@@ -20,7 +20,7 @@ function Header() {
                         {authenticated ? (
                             <>
                                 <Nav.Link href="/post/create">Написать пост</Nav.Link>
-                                <Nav.Link href="/communities">Сообщества</Nav.Link>
+                                <Nav.Link href="/communities">Группы</Nav.Link>
                                 <Nav.Link href="/authors">Авторы</Nav.Link>
                             </>
                         ) : (

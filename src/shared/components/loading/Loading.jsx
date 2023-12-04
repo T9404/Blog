@@ -1,4 +1,3 @@
-/*
 import React from 'react';
 
 const LoadingComponent = () => {
@@ -10,4 +9,3 @@ const LoadingComponent = () => {
 };
 
 export default LoadingComponent;
-*/

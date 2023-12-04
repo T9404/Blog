@@ -1,14 +1,15 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import getAllAuthor from "../../shared/api/author/GetAllAuthor";
 import formatDateWithoutHHSS from "../../util/FormatDateWithoutHHSS";
 import styles from './style.module.css';
 import {useNavigate} from "react-router-dom";
+import LoadingComponent from "../../shared/components/loading/Loading";
 
 const AuthorPage = () => {
     const navigate = useNavigate();
     const [authors, setAuthors] = useState([]);
     const [bestAuthors, setBestAuthors] = useState([]);
-    
+    const [loading, setLoading] = useState(true);
     const path = process.env.PUBLIC_URL + '/assets/';
     
     useEffect(() => {
@@ -24,6 +25,7 @@ const AuthorPage = () => {
         };
         
         fetchData();
+        setLoading(false)
     }, []);
     
     const handleCardClick = (authorName) => {
@@ -68,6 +70,10 @@ const AuthorPage = () => {
         );
         return index !== -1 ? index + 1 : false;
     };
+    
+    if (loading) {
+        return LoadingComponent();
+    }
     
     return (
         <div>

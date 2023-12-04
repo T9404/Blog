@@ -1,13 +1,15 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import getAllGroups from "../../shared/api/group/GetGroups";
 import getRole from "../../shared/api/group/GetRole";
 import subscribe from "../../shared/api/group/Subscribe";
 import ConcreteGroup from "../../shared/components/group/ConcreteGroup";
 import {useNavigate} from "react-router-dom";
+import LoadingComponent from "../../shared/components/loading/Loading";
 
 const GroupPage = () => {
     const [group, setGroup] = useState([]);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
     
     useEffect(() => {
         const fetchData = async () => {
@@ -20,6 +22,7 @@ const GroupPage = () => {
                     })
                 );
                 setGroup(groupsWithRoles);
+                setLoading(false);
             } catch (error) {
                 navigate('/login')
                 localStorage.clear();
@@ -28,6 +31,10 @@ const GroupPage = () => {
         
         fetchData();
     }, []);
+    
+    if (loading) {
+        return LoadingComponent();
+    }
     
     return (
         <div>

@@ -1,18 +1,14 @@
-import { setPosts, setLoading, setError } from '../reducers/postsSlice';
 import axios from 'axios';
 import qs from 'qs';
+import {setGroupPosts, setError, setLoading} from "../reducers/groupPostsSlice";
 
-export const fetchPosts = (searchParams) => async (dispatch) => {
+export const fetchGroupPosts = (searchParams, id) => async (dispatch) => {
     try {
-        const response = await axios.get(`${process.env.REACT_APP_API}/post`, {
+        const response = await axios.get(`${process.env.REACT_APP_API}/community/${id}/post`, {
             params: {
                 page: searchParams.get('page') || 1,
                 size: searchParams.get('pageSize') || 5,
-                author: searchParams.get('search') || '',
-                min: searchParams.get('minTime') || '',
-                max: searchParams.get('maxTime') || '',
                 sorting: searchParams.get('sorting') || 'CreateDesc',
-                onlyMyCommunities: searchParams.get('onlyMyCommunities') || false,
                 tags: searchParams.get('tags') || []
             },
             paramsSerializer: (params) => {
@@ -24,7 +20,7 @@ export const fetchPosts = (searchParams) => async (dispatch) => {
         });
         
         if (response.status === 200) {
-            dispatch(setPosts(response.data));
+            dispatch(setGroupPosts(response.data));
         } else {
             dispatch(setError('Error fetching posts'));
         }
@@ -34,4 +30,3 @@ export const fetchPosts = (searchParams) => async (dispatch) => {
         dispatch(setLoading(false));
     }
 };
-

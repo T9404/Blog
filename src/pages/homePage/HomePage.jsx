@@ -31,7 +31,7 @@ const HomePage = () => {
         const page = searchParams.get('page') || 1;
         
         setForm({pageSize: Number(searchParams.get('pageSize')) || 5, tags: searchParams.getAll('tags') || [], searchQuery: searchParams.get('search'),
-            sorting: searchParams.get('sorting') || 'CreateDesc', minReadingTime: searchParams.get('minReadingTime') || '', maxReadingTime: searchParams.get('maxReadingTime') || '',
+            sorting: searchParams.get('sorting') || 'CreateDesc', minReadingTime: searchParams.get('minTime') || '', maxReadingTime: searchParams.get('maxTime') || '',
             onlyMyCommunities: searchParams.get('onlyMyCommunities') || false});
         
         dispatch(fetchPosts(searchParams))

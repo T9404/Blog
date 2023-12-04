@@ -1,3 +1,33 @@
 .imageCard {
     max-width: 640px;
 }
+
+.imageCardOverlay {
+    position: relative;
+    display: block;
+}
+
+.overlay {
+    left: 55%;
+    top: -30%;
+    position: absolute;
+    margin-top: -10%;
+    margin-left: -15%;
+    transform: scale(0.5) rotate(25deg);
+}
+
+@media screen and (max-width: 768px) {
+    .overlay {
+        left: 50%;
+        top: -20%;
+        transform: scale(0.3) rotate(15deg);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .overlay {
+        left: 50%;
+        top: -10%;
+        transform: scale(0.2) rotate(10deg);
+    }
+}

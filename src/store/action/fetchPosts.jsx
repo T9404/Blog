@@ -11,8 +11,8 @@ export const fetchPosts = (searchParams) => async (dispatch) => {
                 page: searchParams.get('page') || 1,
                 size: searchParams.get('pageSize') || 5,
                 author: searchParams.get('search') || '',
-                min: searchParams.get('minReadingTime') || '',
-                max: searchParams.get('maxReadingTime') || '',
+                min: searchParams.get('minTime') || '',
+                max: searchParams.get('maxTime') || '',
                 sorting: searchParams.get('sorting') || 'CreateDesc',
                 onlyMyCommunities: searchParams.get('onlyMyCommunities') || false,
                 tags: searchParams.get('tags') || []

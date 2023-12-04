@@ -80,11 +80,20 @@ const AuthorPage = () => {
                     >
                         <div className="row no-gutters">
                             <div className="col-md-4">
+                                <div className={styles.imageCardOverlay}>
                                 <img
                                     src={path + (author.gender === 'Male' ? 'male.png' : 'female.png')}
                                     className="card-img"
                                     alt="Gender"
                                 />
+                                    {isBestAuthor(author) && (
+                                        <img
+                                    src={path + `crown_${isBestAuthor(author)}.svg`}
+                                    className={`card-img ${styles.overlay}`}
+                                    alt="Overlay"
+                                />)}
+                                </div>
+                                
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body">

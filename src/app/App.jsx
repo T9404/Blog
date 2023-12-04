@@ -8,9 +8,10 @@ import LoginPage from "../pages/loginPage/LoginPage";
 import ProfilePage from "../pages/profilePage/ProfilePage";
 import PrivateRoute from "../util/PrivateRoute";
 import IndividualPostPage from "../pages/individualPostPage/IndividualPostPage";
-import GroupPage from "../pages/groupPage/GroupPage";
+import GroupPage from "../pages/concreteCommunityPage/GroupPage";
 import AuthorPage from "../pages/authorPage/AuthorPage";
 import PostCreationPage from "../pages/postCreationPage/PostCreationPage";
+import ConcreteCommunityPage from "../pages/concreteCommunityPage/ConcreteCommunityPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                       <Route path="/communities" element={<GroupPage/>}/>
                       <Route path="/authors" element={<AuthorPage/>}/>
                       <Route path="/post/create" element={<PostCreationPage/>}/>
+                      <Route path="/communities/:id" element={<ConcreteCommunityPage/>}/>
                   </Route>
                   <Route path="/registration" element={<RegistrationPage/>}/>
                   <Route path="/login" element={<LoginPage/>}/>

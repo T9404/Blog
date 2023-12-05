@@ -2,7 +2,6 @@ import {Route, Routes} from "react-router-dom"
 import RegistrationPage from "../pages/registrationPage/RegistrationPage";
 import HomePage from "../pages/homePage/HomePage";
 import Header from "../shared/components/header/Header";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from "../shared/components/footer/Footer";
 import LoginPage from "../pages/loginPage/LoginPage";
 import ProfilePage from "../pages/profilePage/ProfilePage";
@@ -12,6 +11,7 @@ import GroupPage from "../pages/concreteCommunityPage/GroupPage";
 import AuthorPage from "../pages/authorPage/AuthorPage";
 import PostCreationPage from "../pages/postCreationPage/PostCreationPage";
 import ConcreteCommunityPage from "../pages/concreteCommunityPage/ConcreteCommunityPage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

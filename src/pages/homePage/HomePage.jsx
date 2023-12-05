@@ -7,6 +7,7 @@ import PaginationComponent from "../../shared/components/pagination/PaginationCo
 import PostElement from "../../shared/components/postElement/PostElement";
 import tagConverter from "../../shared/components/tagConverter/TagConverter";
 import LoadingComponent from "../../shared/components/loading/Loading";
+import TagSelect from "../../shared/components/tagConverter/Tag";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,9 @@ const HomePage = () => {
     });
     
     useEffect(() => {
+        
+        console.log("answer: " + searchParams.getAll('tags'))
+        
         const page = searchParams.get('page') || 1;
         
         setForm({pageSize: Number(searchParams.get('pageSize')) || 5, tags: searchParams.getAll('tags') || [], searchQuery: searchParams.get('search'),
@@ -110,24 +114,7 @@ const HomePage = () => {
                         />
                     </div>
                     <div className="p-2 flex-fill bd-highlight">
-                        <select
-                            className="form-select"
-                            aria-label="Default select example"
-                            multiple={true}
-                            onChange={handleTagsChange}
-                        >
-                            <option value="интернет">Интернет</option>
-                            <option value="история">История</option>
-                            <option value="еда">Еда</option>
-                            <option value="18+">18+</option>
-                            <option value="приколы">Приколы</option>
-                            <option value="it">IT</option>
-                            <option value="теория_заговора">Теория заговора</option>
-                            <option value="соцсети">Соцсети</option>
-                            <option value="косплей">Косплей</option>
-                            <option value="преступление">Преступление</option>
-                            
-                        </select>
+                        <TagSelect handleTagsChange={handleTagsChange} />
                     </div>
                 </div>
                 

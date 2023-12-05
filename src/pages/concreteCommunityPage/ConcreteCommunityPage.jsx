@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchGroupPosts} from "../../store/action/fetchGroupPosts";
 import {setLoading} from "../../store/reducers/postsSlice";
 import LoadingComponent from "../../shared/components/loading/Loading";
+import TagSelect from "../../shared/components/tagConverter/Tag";
 
 const ConcreteCommunityPage = () => {
     const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const ConcreteCommunityPage = () => {
     });
     
     
+    
     useEffect( () => {
         const fetchData = async () => {
             try {
@@ -60,11 +62,7 @@ const ConcreteCommunityPage = () => {
         setForm({pageSize: Number(searchParams.get('pageSize')) || 5, tags: searchParams.getAll('tags') || [],
             sorting: searchParams.get('sorting') || 'CreateDesc'});
         
-        
-        console.log(posts)
         dispatch(fetchGroupPosts(searchParams, id))
-        console.log(posts)
-        
         const page = searchParams.get('page') || 1;
         handlePageChange(page)
         fetchData();
@@ -106,7 +104,7 @@ const ConcreteCommunityPage = () => {
         
         const cleanedTagsQueryString = tagsQueryString.replace(/&undefined/g, '');
         
-        navigate(`/communities/${id}/?${queryString}${cleanedTagsQueryString ? `&${cleanedTagsQueryString}` : ''}`);
+        navigate(`/?${queryString}${cleanedTagsQueryString ? `&${cleanedTagsQueryString}` : ''}`);
     };
     
     if (!posts || !posts.length) {
@@ -176,23 +174,7 @@ const ConcreteCommunityPage = () => {
                             </div>
                         
                             <div className="p-2 flex-fill bd-highlight">
-                                <select
-                                    className="form-select"
-                                    aria-label="Default select example"
-                                    multiple={true}
-                                    onChange={handleTagsChange}
-                                >
-                                    <option value="интернет">Интернет</option>
-                                    <option value="история">История</option>
-                                    <option value="еда">Еда</option>
-                                    <option value="18+">18+</option>
-                                    <option value="приколы">Приколы</option>
-                                    <option value="it">IT</option>
-                                    <option value="теория_заговора">Теория заговора</option>
-                                    <option value="соцсети">Соцсети</option>
-                                    <option value="косплей">Косплей</option>
-                                    <option value="преступление">Преступление</option>
-                                </select>
+                                <TagSelect handleTagsChange={handleTagsChange} />
                             </div>
                         </div>
                         <div className="d-flex flex-column">

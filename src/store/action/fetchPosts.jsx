@@ -13,7 +13,7 @@ export const fetchPosts = (searchParams) => async (dispatch) => {
                 max: searchParams.get('maxTime') || '',
                 sorting: searchParams.get('sorting') || 'CreateDesc',
                 onlyMyCommunities: searchParams.get('onlyMyCommunities') || false,
-                tags: searchParams.get('tags') || []
+                tags: searchParams.getAll('tags') || []
             },
             paramsSerializer: (params) => {
                 return qs.stringify(params, { arrayFormat: 'repeat' });

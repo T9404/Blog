@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-const createPost = async (form) => {
+const createPersonalPost = async (form) => {
     try {
-        console.log(form)
-        const response = await axios.post(`${process.env.REACT_APP_API}/community/${form.id}/post`, {
+        const response = await axios.post(`${process.env.REACT_APP_API}/post`, {
                 title: form.title,
                 description: form.text,
                 readingTime: form.timeReading,
@@ -19,9 +18,8 @@ const createPost = async (form) => {
             return response.data;
         }
     } catch (error) {
-        console.log(error)
         throw error;
     }
 }
 
-export default createPost;
+export default createPersonalPost;

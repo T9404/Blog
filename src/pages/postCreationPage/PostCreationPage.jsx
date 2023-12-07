@@ -4,6 +4,7 @@ import TagSelect from "../../shared/components/tagConverter/Tag";
 import PostCreationSelectGroup from "../../shared/components/postCreation/PostCreationSelectGroup";
 import InternalElement from "../../shared/components/postCreation/InternalElement";
 import createPost from "../../shared/api/posts/CreatePost";
+import createPersonalPost from "../../shared/api/posts/CreatePersonalPost";
 
 const PostCreationPage = () => {
     const [addressArray, setAddressArray] = useState([
@@ -60,11 +61,18 @@ const PostCreationPage = () => {
     
     const handleSubmitButton = async () => {
         try {
-            console.log(form.addressGuid)
-            const createdPost = await createPost(form);
+            console.log(form.addressGuid);
+            
+            let createdPost;
+            if (form.id) {
+                createdPost = await createPost(form);
+            } else {
+                createdPost = await createPersonalPost(form);
+            }
+            
             console.log(createdPost);
+            
             setForm({
-                ...form,
                 title: '',
                 timeReading: '',
                 pictureLink: '',
@@ -73,11 +81,12 @@ const PostCreationPage = () => {
                 addressGuid: '',
                 id: ''
             });
+            
             addressArray.splice(0, addressArray.length, [0, "", 0, ""]);
         } catch (error) {
             console.error(error);
         }
-    }
+    };
     
     return (
         <div className="border p-4">

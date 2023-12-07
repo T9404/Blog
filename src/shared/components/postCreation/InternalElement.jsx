@@ -28,6 +28,16 @@ const InternalElement = ({data, index, handleChangeAddress}) => {
         fetchData().then();
     }, [data, form.next]);
     
+    useEffect(() => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            id: data[0],
+            text: data[1],
+            next: data[2],
+            guid: data[3]
+        }))
+    }, [data]);
+    
     
     if (loading) {
         return <Loading/>;

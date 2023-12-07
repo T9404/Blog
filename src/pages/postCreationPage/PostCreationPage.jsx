@@ -32,9 +32,7 @@ const PostCreationPage = () => {
     }
     
     useEffect(() => {
-        console.log("----")
         console.log(addressArray)
-        console.log("-----")
     }, [addressArray]);
     
     const changeAddressFunction = (index, data) => {

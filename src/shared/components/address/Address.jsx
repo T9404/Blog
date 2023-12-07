@@ -23,9 +23,8 @@ const ConcreteAddress = ({ objectGuid }) => {
                 <>
                     {addressChain.map((address, index) => (
                         <span key={index}>
-          {index > 0 ? ', ' : ''}
-                            {address.text}
-        </span>
+                            {index > 0 ? ', ' : ''} {address.text}
+                        </span>
                     ))}
                 </>
             )}

@@ -12,12 +12,15 @@ import AuthorPage from "../pages/authorPage/AuthorPage";
 import PostCreationPage from "../pages/postCreationPage/PostCreationPage";
 import ConcreteCommunityPage from "../pages/concreteCommunityPage/ConcreteCommunityPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
       <>
           <Header/>
           <div className="container">
+              <ToastContainer />
               <Routes>
                   <Route path="/" element={<HomePage/>}/>
                   <Route element={<PrivateRoute/>}>

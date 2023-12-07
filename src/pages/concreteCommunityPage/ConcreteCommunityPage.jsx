@@ -3,14 +3,14 @@ import React, {useEffect, useState} from "react";
 import getConcreteCommunity from "../../shared/api/community/GetConcreteCommunity";
 import SubscribeButton from "../../shared/components/group/SubscribeButton";
 import getRole from "../../shared/api/group/GetRole";
-import tagConverter from "../../shared/components/tagConverter/TagConverter";
+import tagConverter from "../../shared/components/tagElement/TagConverter";
 import PostElement from "../../shared/components/postElement/PostElement";
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchGroupPosts} from "../../store/action/fetchGroupPosts";
 import {setLoading} from "../../store/reducers/postsSlice";
 import LoadingComponent from "../../shared/components/loading/Loading";
-import TagSelect from "../../shared/components/tagConverter/Tag";
+import TagSelect from "../../shared/components/tagElement/Tag";
 
 const ConcreteCommunityPage = () => {
     const dispatch = useDispatch();
@@ -69,7 +69,7 @@ const ConcreteCommunityPage = () => {
         
         
         fetchData();
-        fetchRole().then(r => console.log(role));
+        fetchRole().then(() => console.log(role));
     }, [dispatch, location.search]);
     
     const handleSubscriberUpdate = (change) => {

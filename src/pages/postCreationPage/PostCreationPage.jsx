@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import tagConverter from "../../shared/components/tagConverter/TagConverter";
-import TagSelect from "../../shared/components/tagConverter/Tag";
+import tagConverter from "../../shared/components/tagElement/TagConverter";
+import TagSelect from "../../shared/components/tagElement/Tag";
 import PostCreationSelectGroup from "../../shared/components/postCreation/PostCreationSelectGroup";
 import InternalElement from "../../shared/components/postCreation/InternalElement";
 import createPost from "../../shared/api/posts/CreatePost";
 import createPersonalPost from "../../shared/api/posts/CreatePersonalPost";
+import notifySuccess from "../../util/notification/SuccessNotify";
+import notifyError from "../../util/notification/error/ErrorNotify";
 
 const PostCreationPage = () => {
     const [addressArray, setAddressArray] = useState([
@@ -27,9 +29,9 @@ const PostCreationPage = () => {
         setForm({ ...form, tags: idTags });
     };
     
-    const handleGroupChange = async (e) => {
-        const selectedOption = e.target.value;
-        setForm({...form, id: selectedOption});
+    const handleGroupChange = async (selectedOption) => {
+        const selectedValues = selectedOption.value;
+        setForm({...form, id: selectedValues});
     }
     
     useEffect(() => {
@@ -61,16 +63,11 @@ const PostCreationPage = () => {
     
     const handleSubmitButton = async () => {
         try {
-            console.log(form.addressGuid);
-            
-            let createdPost;
-            if (form.id) {
-                createdPost = await createPost(form);
+            if (form.id && form.id !== '') {
+                await createPost(form);
             } else {
-                createdPost = await createPersonalPost(form);
+                await createPersonalPost(form);
             }
-            
-            console.log(createdPost);
             
             setForm({
                 title: '',
@@ -83,8 +80,13 @@ const PostCreationPage = () => {
             });
             
             addressArray.splice(0, addressArray.length, [0, "", 0, ""]);
+            notifySuccess("Пост успешно создан")
         } catch (error) {
-            console.error(error);
+            console.log(error)
+            if (error.message === 'Unauthorized') {
+                notifyError('Ошибка авторизации');
+            }
+            notifyError(error)
         }
     };
     

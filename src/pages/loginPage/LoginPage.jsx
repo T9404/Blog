@@ -2,12 +2,13 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import login from "../../shared/api/login/Login";
 import styles from './style.module.css';
+import notifyError from "../../util/notification/error/ErrorNotify";
+import successNotify from "../../util/notification/SuccessNotify";
 
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async e => {
@@ -18,12 +19,13 @@ const LoginPage = () => {
             if (result.token) {
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('email', email);
+                successNotify('Вы успешно вошли!')
                 await navigate('/');
             } else {
-                setError('Authentication failed. Please check your email and password.');
+                notifyError(result.message)
             }
         } catch (error) {
-            setError('An error occurred. Please try again later.');
+            notifyError(error)
         }
     };
 
@@ -31,7 +33,6 @@ const LoginPage = () => {
         <div className={`mx-auto my-auto ${styles.loginForm}`}>
             <form onSubmit={handleSubmit} className="shadow p-3 mb-5 bg-body rounded">
                 <h3>Вход</h3>
-                {error && <p className="error-message">{error}</p>} {}
                 <label htmlFor="exampleInputEmail1" className="form-label">Email</label>
                 <div className="mb-3">
                     <input

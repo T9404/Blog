@@ -5,9 +5,9 @@ import { setLoading } from '../../store/reducers/postsSlice';
 import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import PostElement from "../../shared/components/postElement/PostElement";
-import tagConverter from "../../shared/components/tagConverter/TagConverter";
+import tagConverter from "../../shared/components/tagElement/TagConverter";
 import LoadingComponent from "../../shared/components/loading/Loading";
-import TagSelect from "../../shared/components/tagConverter/Tag";
+import TagSelect from "../../shared/components/tagElement/Tag";
 
 const HomePage = () => {
     const dispatch = useDispatch();
@@ -30,9 +30,6 @@ const HomePage = () => {
     });
     
     useEffect(() => {
-        
-        console.log("answer: " + searchParams.getAll('tags'))
-        
         const page = searchParams.get('page') || 1;
         
         setForm({pageSize: Number(searchParams.get('pageSize')) || 5, tags: searchParams.getAll('tags') || [], searchQuery: searchParams.get('search'),

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import statusErrorMessages from "../../../util/notification/error/StatusErrorMessages";
 
 const login = async (email, password) => {
     try {
@@ -6,12 +7,15 @@ const login = async (email, password) => {
             email: email,
             password: password,
         });
-
+        
         if (response.status === 200) {
             return response.data;
+        } else {
+            const errorMessage = statusErrorMessages[response.status] || `Unexpected status code: ${response.status}`;
+            return Promise.reject(Error(errorMessage));
         }
     } catch (error) {
-        throw error;
+        throw new Error("Invalid email or password");
     }
 };
 

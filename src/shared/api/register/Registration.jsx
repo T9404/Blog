@@ -1,4 +1,6 @@
 import axios from "axios";
+import statusErrorMessages from "../../../util/notification/error/StatusErrorMessages";
+import parseAllErrors from "../../../util/notification/error/ParseAllErrors";
 
 const register = async (form) => {
     try {
@@ -13,9 +15,12 @@ const register = async (form) => {
 
         if (response.status === 200) {
             return response.data;
+        } else {
+            const errorMessage = statusErrorMessages[response.status] || `Unexpected status code: ${response.status}`;
+            return Promise.reject(Error(errorMessage));
         }
     } catch (error) {
-        throw error;
+        throw new Error(parseAllErrors(error));
     }
 }
 

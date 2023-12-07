@@ -1,6 +1,7 @@
 import {useState} from "react";
 import subscribe from "../../api/group/Subscribe";
 import unsubscribe from "../../api/group/Unsubcribe";
+import notifyError from "../../../util/notification/error/ErrorNotify";
 
 const SubscribeButton = ({ groupId, groupRole, onUpdateSubscribers }) => {
     const [isSubscribed, setIsSubscribed] = useState(groupRole === 'Subscriber');
@@ -11,7 +12,7 @@ const SubscribeButton = ({ groupId, groupRole, onUpdateSubscribers }) => {
             setIsSubscribed(true);
             onUpdateSubscribers(1);
         } catch (error) {
-            console.log(error);
+            notifyError("Вы не авторизованы, пожалуйста, войдите заново");
         }
     }
     
@@ -21,7 +22,7 @@ const SubscribeButton = ({ groupId, groupRole, onUpdateSubscribers }) => {
             setIsSubscribed(false);
             onUpdateSubscribers(-1);
         } catch (error) {
-            console.log(error);
+            notifyError("Вы не авторизованы, пожалуйста, войдите заново");
         }
     }
     

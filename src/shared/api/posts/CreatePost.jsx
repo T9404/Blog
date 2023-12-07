@@ -1,26 +1,31 @@
 import axios from 'axios';
+import statusErrorMessages from "../../../util/notification/error/StatusErrorMessages";
+import parseAllErrors from "../../../util/notification/error/ParseAllErrors";
 
 const createPost = async (form) => {
     try {
-        console.log(form)
-        const response = await axios.post(`${process.env.REACT_APP_API}/community/${form.id}/post`, {
-                title: form.title,
-                description: form.text,
-                readingTime: form.timeReading,
-                image: form.pictureLink,
-                addressId: form.addressGuid,
-                tags: form.tags,
-            }, {
+        const requestData = {
+            title: form.title,
+            description: form.text,
+            readingTime: form.timeReading,
+            tags: form.tags,
+            ...(form.addressGuid !== '' && { addressId: form.addressGuid }),
+            ...(form.pictureLink !== '' && { image: form.pictureLink }),
+        };
+        
+        const response = await axios.post(`${process.env.REACT_APP_API}/community/${form.id}/post`, requestData, {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 },
             });
         if (response.status === 200) {
             return response.data;
+        } else {
+            const errorMessage = statusErrorMessages[response.status] || `Unexpected status code: ${response.status}`;
+            return Promise.reject(Error(errorMessage));
         }
     } catch (error) {
-        console.log(error)
-        throw error;
+        throw new Error(parseAllErrors(error));
     }
 }
 

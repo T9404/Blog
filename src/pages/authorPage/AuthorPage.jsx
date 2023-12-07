@@ -4,6 +4,7 @@ import formatDateWithoutHHSS from "../../util/FormatDateWithoutHHSS";
 import styles from './style.module.css';
 import {useNavigate} from "react-router-dom";
 import LoadingComponent from "../../shared/components/loading/Loading";
+import notifyError from "../../util/notification/error/ErrorNotify";
 
 const AuthorPage = () => {
     const navigate = useNavigate();
@@ -20,12 +21,13 @@ const AuthorPage = () => {
                 setAuthors(sortedAuthors);
                 handleSort(sortedAuthors);
             } catch (error) {
-                console.log(error);
+                notifyError(error.message);
+            } finally {
+                setLoading(false);
             }
         };
         
         fetchData();
-        setLoading(false)
     }, []);
     
     const handleCardClick = (authorName) => {

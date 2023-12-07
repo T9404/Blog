@@ -3,6 +3,7 @@ import styles from './style.module.css';
 import getProfile from "../../shared/api/profile/GetProfile";
 import {useNavigate} from "react-router-dom";
 import updateProfile from "../../shared/api/profile/UpdateProfile";
+import notifyError from "../../util/notification/error/ErrorNotify";
 
 const ProfilePage = () => {
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ const ProfilePage = () => {
                     birthDate: formattedBirthDate.toISOString().split('T')[0],
                 }));
             } catch (error) {
-                setError(['Profile loading failed. Please log in']);
+                notifyError(error)
                 localStorage.clear();
                 navigate('/login');
             }
@@ -47,15 +48,18 @@ const ProfilePage = () => {
 
         const validationErrors = validate(form);
         if (Object.keys(validationErrors).length > 0) {
-            setError(Object.values(validationErrors));
-            return;
+            const errorMessage = `${validationErrors?.email || ''} ${validationErrors?.phoneNumber || ''}`;
+            if (errorMessage.trim() !== '') {
+                notifyError(errorMessage);
+                return;
+            }
         }
 
         try {
             await updateProfile(form);
             window.location.reload();
         } catch (error) {
-            setError(['Profile update failed. Please check your data.']);
+            notifyError(error)
         }
     }
 
@@ -65,11 +69,11 @@ const ProfilePage = () => {
         const phoneRegex = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/i;
 
         if (!emailRegex.test(values.email)) {
-            errors.email = 'Неверный формат email\n';
+            errors.email = 'Неверный формат email ';
         }
 
         if (!phoneRegex.test(values.phoneNumber)) {
-            errors.phoneNumber = 'Неверный формат телефона\n';
+            errors.phoneNumber = 'Неверный формат телефона ';
         }
 
         return errors;

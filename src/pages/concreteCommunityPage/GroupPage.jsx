@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import getAllGroups from "../../shared/api/group/GetGroups";
 import getRole from "../../shared/api/group/GetRole";
-import subscribe from "../../shared/api/group/Subscribe";
 import ConcreteGroup from "../../shared/components/group/ConcreteGroup";
 import {useNavigate} from "react-router-dom";
 import LoadingComponent from "../../shared/components/loading/Loading";
+import notifyError from "../../util/notification/error/ErrorNotify";
 
 const GroupPage = () => {
     const [group, setGroup] = useState([]);
@@ -24,6 +24,7 @@ const GroupPage = () => {
                 setGroup(groupsWithRoles);
                 setLoading(false);
             } catch (error) {
+                notifyError("Вы не авторизованы, пожалуйста, войдите заново");
                 navigate('/login')
                 localStorage.clear();
             }

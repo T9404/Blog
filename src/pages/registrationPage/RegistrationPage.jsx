@@ -3,6 +3,9 @@ import {useState} from "react";
 import register from "../../shared/api/register/Registration";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from './style.module.css';
+import notifyWarning from "../../util/notification/error/WarningNotify";
+import notifyError from "../../util/notification/error/ErrorNotify";
+import successNotify from "../../util/notification/SuccessNotify";
 
 
 const RegistrationPage = () => {
@@ -15,7 +18,6 @@ const RegistrationPage = () => {
         phoneNumber: ''
     });
     
-    const [error, setError] = useState([]);
     const navigate = useNavigate();
 
     const handleSubmit = async e => {
@@ -23,7 +25,7 @@ const RegistrationPage = () => {
 
         const validationErrors = validate(form);
         if (Object.keys(validationErrors).length > 0) {
-            setError(Object.values(validationErrors));
+            notifyWarning(Object.values(validationErrors).join(''));
             return;
         }
 
@@ -32,12 +34,15 @@ const RegistrationPage = () => {
             if (!result.error) {
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('email', form.email);
+                successNotify('Вы успешно зарегистрировались!')
                 await navigate('/');
             } else {
-                setError(['Registration failed. Please check your data.']);
+                notifyError(result.message)
+                console.log("a")
             }
         } catch (error) {
-            setError(['Registration failed. Please check your data.']);
+            notifyError(error)
+            console.log("b")
         }
     };
 
@@ -68,13 +73,6 @@ const RegistrationPage = () => {
         <div className={`mx-auto my-auto ${styles.registerForm}`}>
             <form onSubmit={handleSubmit} className="shadow p-3 mb-5 bg-body rounded">
                 <h3>Регистрация</h3>
-                {error && (
-                    <div className="error-message" style={{ color: 'red' }}>
-                        {Object.values(error).map((errorMsg, index) => (
-                            <p key={index}>{errorMsg}</p>
-                        ))}
-                    </div>
-                )}
                 <label htmlFor="exampleFullName1" className="form-label">ФИО</label>
                 <div className="mb-3">
                     <input
@@ -96,6 +94,7 @@ const RegistrationPage = () => {
                         className="form-control"
                         type="date"
                         onChange={e => setForm({...form, birthDate: e.currentTarget.value})}
+                        max={new Date().toISOString().split('T')[0]}
                         required
                     />
                 </div>

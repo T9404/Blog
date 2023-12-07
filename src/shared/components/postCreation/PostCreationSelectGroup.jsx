@@ -28,7 +28,7 @@ const PostCreationSelectGroup = ({ handleGroupChange }) => {
     }, [navigate]);
     
     return (
-        <div className="p-2 flex-fill bd-highlight">
+        <div>
             <select
                 className="form-select"
                 aria-label="Default select example"

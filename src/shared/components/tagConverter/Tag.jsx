@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
 
 const TagSelect = ({ handleTagsChange }) => {
     const [tags, setTags] = useState([]);
@@ -16,16 +18,14 @@ const TagSelect = ({ handleTagsChange }) => {
     
     return (
         <div>
-            <select
-                className="form-select"
-                aria-label="Default select example"
-                multiple={true}
+            <Select
+                closeMenuOnSelect={false}
+                components={makeAnimated()}
+                defaultValue={[]}
+                isMulti
+                options={tags.map(tag => ({ value: tag.name, label: tag.name }))}
                 onChange={handleTagsChange}
-            >
-                {tags.map(tag => (
-                    <option value={tag.name}>{tag.name}</option>
-                ))}
-            </select>
+            />
         </div>
     );
 };

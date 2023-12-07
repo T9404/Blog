@@ -20,11 +20,11 @@ const PostCreationPage = () => {
         addressGuid: ''
     });
     
-    const handleTagsChange = async (e) => {
-        const selectedOptions = Array.from(e.target.selectedOptions).map(option => option.value);
-        const idTags = await tagConverter(selectedOptions);
-        setForm({...form, tags: idTags});
-    }
+    const handleTagsChange = async (selectedOptions) => {
+        const selectedValues = selectedOptions.map(option => option.value);
+        const idTags = await tagConverter(selectedValues);
+        setForm({ ...form, tags: idTags });
+    };
     
     const handleGroupChange = async (e) => {
         const selectedOption = e.target.value;

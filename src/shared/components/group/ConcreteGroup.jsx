@@ -9,6 +9,7 @@ const ConcreteGroup = ({ group }) => {
     
     
     const navigateToCommunities = () => {
+        console.log(group.id)
         navigate(`/communities/${group.id}`);
     }
     

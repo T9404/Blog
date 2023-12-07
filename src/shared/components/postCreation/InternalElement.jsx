@@ -1,4 +1,3 @@
-import Select from 'react-select'
 import React, {useEffect, useState} from "react";
 import Loading from "../loading/Loading";
 import searchAddress from "../../api/address/SearchAddress";
@@ -11,7 +10,8 @@ const InternalElement = ({data, index, handleChangeAddress}) => {
     const [form, setForm] = useState({
         id: data[0],
         text: data[1],
-        next: data[2]
+        next: data[2],
+        guid: data[3]
     });
     
     useEffect(() => {
@@ -34,12 +34,13 @@ const InternalElement = ({data, index, handleChangeAddress}) => {
     }
     
     const changeText = (selectedOption) => {
-        handleChangeAddress(index, [selectedOption.value, selectedOption.label, form.next]);
+        handleChangeAddress(index, [selectedOption.value, selectedOption.label, form.next, selectedOption.guid]);
 
         setForm({
             ...form,
             text: selectedOption.label,
             id: selectedOption.value,
+            guid: selectedOption.guid
         });
     };
     
@@ -47,7 +48,7 @@ const InternalElement = ({data, index, handleChangeAddress}) => {
         searchAddress(form.next, inputValue)
             .then((postData) => {
                 setPost(postData);
-                callback(postData.map((post) => ({ value: post.objectId, label: post.text })));
+                callback(postData.map((post) => ({ value: post.objectId, label: post.text, guid: post.objectGuid })));
             })
             .catch((error) => {
                 console.error('Error fetching post:', error);

@@ -39,6 +39,7 @@ const ConcreteCommunityPage = () => {
     
     
     useEffect( () => {
+        console.log("concrete community page")
         const fetchData = async () => {
             try {
                 const communityData = await getConcreteCommunity(id);
@@ -65,6 +66,8 @@ const ConcreteCommunityPage = () => {
         dispatch(fetchGroupPosts(searchParams, id))
         const page = searchParams.get('page') || 1;
         handlePageChange(page)
+        
+        
         fetchData();
         fetchRole().then(r => console.log(role));
     }, [dispatch, location.search]);
@@ -104,7 +107,7 @@ const ConcreteCommunityPage = () => {
         
         const cleanedTagsQueryString = tagsQueryString.replace(/&undefined/g, '');
         
-        navigate(`/?${queryString}${cleanedTagsQueryString ? `&${cleanedTagsQueryString}` : ''}`);
+        navigate(`/communities/${id}?${queryString}${cleanedTagsQueryString ? `&${cleanedTagsQueryString}` : ''}`);
     };
     
     if (!posts || !posts.length) {

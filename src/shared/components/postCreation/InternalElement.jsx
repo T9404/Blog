@@ -26,7 +26,7 @@ const InternalElement = ({data, index, handleChangeAddress}) => {
         }
         
         fetchData().then();
-    }, [data]);
+    }, [data, form.next]);
     
     
     if (loading) {
@@ -35,17 +35,17 @@ const InternalElement = ({data, index, handleChangeAddress}) => {
     
     const changeText = (selectedOption) => {
         handleChangeAddress(index, [selectedOption.value, selectedOption.label, form.next, selectedOption.guid]);
-
-        setForm({
-            ...form,
+        
+        setForm((prevForm) => ({
+            ...prevForm,
             text: selectedOption.label,
             id: selectedOption.value,
             guid: selectedOption.guid
-        });
+        }));
     };
     
     const loadOptions = (inputValue, callback) => {
-        searchAddress(form.next, inputValue)
+        searchAddress(data[2], inputValue)
             .then((postData) => {
                 setPost(postData);
                 callback(postData.map((post) => ({ value: post.objectId, label: post.text, guid: post.objectGuid })));

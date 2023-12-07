@@ -32,7 +32,9 @@ const PostCreationPage = () => {
     }
     
     useEffect(() => {
+        console.log("----")
         console.log(addressArray)
+        console.log("-----")
     }, [addressArray]);
     
     const changeAddressFunction = (index, data) => {
@@ -50,12 +52,12 @@ const PostCreationPage = () => {
         
         setForm({...form, addressGuid: data[3]});
         
-        
         setAddressArray((prevAddressArray) => {
             const newAddressArray = [...prevAddressArray];
             newAddressArray.push([newAddressArray.length, "", newAddressArray[newAddressArray.length - 1][0]]);
             return newAddressArray;
         });
+        console.log(addressArray)
     };
     
     const handleSubmitButton = async () => {

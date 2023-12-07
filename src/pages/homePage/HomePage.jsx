@@ -181,11 +181,11 @@ const HomePage = () => {
             
             {posts && posts.posts && posts.posts.length > 0 ? (
                 <>
-                    {<ul>
+                    {<>
                         {posts.posts.map((post) => (
                             <PostElement key={post.id} posts={post} />
                         ))}
-                    </ul>}
+                    </>}
                     
                     <div className="d-flex flex-column flex-md-row bd-highlight">
                     <div className="p-2 flex-fill bd-highlight">

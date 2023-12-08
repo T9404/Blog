@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import tagConverter from "../../shared/components/tagElement/TagConverter";
+import tagConverterNameToId from "../../util/converter/TagConverterNameToId";
 import TagSelect from "../../shared/components/tagElement/Tag";
 import PostCreationSelectGroup from "../../shared/components/postCreation/PostCreationSelectGroup";
 import InternalElement from "../../shared/components/postCreation/InternalElement";
 import createPost from "../../shared/api/posts/CreatePost";
 import createPersonalPost from "../../shared/api/posts/CreatePersonalPost";
-import notifySuccess from "../../util/notification/SuccessNotify";
+import notifySuccess from "../../util/notification/success/SuccessNotify";
 import notifyError from "../../util/notification/error/ErrorNotify";
 import {useSearchParams} from "react-router-dom";
 
@@ -27,7 +27,7 @@ const PostCreationPage = () => {
     
     const handleTagsChange = async (selectedOptions) => {
         const selectedValues = selectedOptions.map(option => option.value);
-        const idTags = await tagConverter(selectedValues);
+        const idTags = await tagConverterNameToId(selectedValues);
         setForm({ ...form, tags: idTags });
     };
     
@@ -155,7 +155,7 @@ const PostCreationPage = () => {
                     <PostCreationSelectGroup handleGroupChange={handleGroupChange} form={form} />
                 </div>
                 <div className="p-2 flex-fill bd-highlight">
-                    <TagSelect handleTagsChange={handleTagsChange} />
+                    <TagSelect handleTagsChange={handleTagsChange} arrayTagsId={searchParams.getAll('tags')} />
                 </div>
             </div>
             

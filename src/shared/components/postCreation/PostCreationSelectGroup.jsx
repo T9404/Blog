@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import getMyCommunity from "../../api/community/GetMyCommunity";
 import {useNavigate} from "react-router-dom";
-import convertCommunityIdToName from "../../../util/CommunityConverter";
+import convertCommunityIdToName from "../../../util/converter/CommunityConverter";
 import notifyError from "../../../util/notification/error/ErrorNotify";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import getAllAuthor from "../../shared/api/author/GetAllAuthor";
-import formatDateWithoutHHSS from "../../util/FormatDateWithoutHHSS";
+import formatDateWithoutHHSS from "../../util/converter/FormatDateWithoutHHSS";
 import styles from './style.module.css';
 import {useNavigate} from "react-router-dom";
 import LoadingComponent from "../../shared/components/loading/Loading";

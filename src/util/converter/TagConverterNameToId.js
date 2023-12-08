@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = 'https://blog.kreosoft.space/api';
 
-const tagConverter = async (selectedOptions) => {
+const tagConverterNameToId = async (selectedOptions) => {
     try {
         const response = await axios.get(`${BASE_URL}/tag`);
         
@@ -24,4 +24,4 @@ const tagConverter = async (selectedOptions) => {
     }
 };
 
-export default tagConverter;
+export default tagConverterNameToId;

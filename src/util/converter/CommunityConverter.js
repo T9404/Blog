@@ -1,4 +1,4 @@
-import getConcreteCommunity from "../shared/api/community/GetConcreteCommunity";
+import getConcreteCommunity from "../../shared/api/community/GetConcreteCommunity";
 
 const convertCommunityIdToName = async (communityId) => {
     try {

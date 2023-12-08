@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import login from "../../shared/api/login/Login";
 import styles from './style.module.css';
 import notifyError from "../../util/notification/error/ErrorNotify";
-import successNotify from "../../util/notification/SuccessNotify";
+import successNotify from "../../util/notification/success/SuccessNotify";
 
 
 const LoginPage = () => {

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import getConcreteCommunity from "../../shared/api/community/GetConcreteCommunity";
 import SubscribeButton from "../../shared/components/group/SubscribeButton";
 import getRole from "../../shared/api/group/GetRole";
-import tagConverter from "../../shared/components/tagElement/TagConverter";
+import tagConverterNameToId from "../../util/converter/TagConverterNameToId";
 import PostElement from "../../shared/components/postElement/PostElement";
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import {useDispatch, useSelector} from "react-redux";
@@ -85,7 +85,7 @@ const ConcreteCommunityPage = () => {
     
     const handleTagsChange = async (selectedOptions) => {
         const selectedValues = selectedOptions.map(option => option.value);
-        const idTags = await tagConverter(selectedValues);
+        const idTags = await tagConverterNameToId(selectedValues);
         setForm({...form, tags: idTags});
     };
     
@@ -177,6 +177,7 @@ const ConcreteCommunityPage = () => {
                                     className="form-select"
                                     aria-label="Default select example"
                                     onChange={e => setForm({...form, sorting: e.currentTarget.value})}
+                                    value={form.sorting}
                                 >
                                     <option value="CreateDesc">По дате создания (сначала новые)</option>
                                     <option value="CreateAsc">По дате создания (сначала старые)</option>
@@ -186,7 +187,7 @@ const ConcreteCommunityPage = () => {
                             </div>
                             
                             <div className="p-2 flex-fill bd-highlight">
-                                <TagSelect handleTagsChange={handleTagsChange}/>
+                                <TagSelect handleTagsChange={handleTagsChange} arrayTagsId={searchParams.getAll('tags')}/>
                             </div>
                         </div>
                         <div className="d-flex flex-column">

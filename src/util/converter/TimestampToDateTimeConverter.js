@@ -1,4 +1,4 @@
-function formatDateTime(timestamp) {
+function timestampToDateTimeConverter(timestamp) {
     const options = {
         day: '2-digit',
         month: '2-digit',
@@ -13,9 +13,8 @@ function formatDateTime(timestamp) {
         return formattedDate.replace(',', '').replaceAll("/", ".");
     }
     catch (e) {
-        console.log(e);
-        console.log(timestamp);
+        return timestamp;
     }
 }
 
-export default formatDateTime;
+export default timestampToDateTimeConverter;

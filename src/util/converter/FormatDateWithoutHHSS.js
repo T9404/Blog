@@ -9,9 +9,7 @@ function formatDateWithoutHHSS(timestamp) {
         const formattedDate = new Intl.DateTimeFormat('ru-RU', options).format(new Date(timestamp));
         return formattedDate.replace(',', '').replaceAll("/", ".");
     } catch (e) {
-        console.log(e);
-        console.log(timestamp);
-        return timestamp; // Return the original timestamp if formatting fails
+        return timestamp;
     }
 }
 

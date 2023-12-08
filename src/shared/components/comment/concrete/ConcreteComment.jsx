@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import formatDateTime from "../../../../util/FormatDateTime";
+import timestampToDateTimeConverter from "../../../../util/converter/TimestampToDateTimeConverter";
 import getSubComments from "../../../api/comment/GetSubComments";
 import createComment from "../../../api/comment/CreateComment";
 import {useNavigate} from "react-router-dom";
@@ -102,7 +102,7 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
             <p>{comment.deleteDate != null ? '[Комментарий удален]' : comment.content}
                 {comment.deleteDate == null && comment.modifiedDate && <span className={styles.grayText}>(изменено)</span>}</p>
             <div className="d-sm-flex justify-content-between">
-                {comment.createTime && <p>{formatDateTime(comment.createTime)}</p>}
+                {comment.createTime && <p>{timestampToDateTimeConverter(comment.createTime)}</p>}
                 
                 <div className="d-flex flex-row bd-highlight mb-3">
                 <button type="button" className={`${styles.blueText} btn btn-unstyled p-2 bd-highlight`}

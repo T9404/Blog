@@ -5,7 +5,7 @@ import {setLoading} from '../../store/reducers/postsSlice';
 import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import PostElement from "../../shared/components/postElement/PostElement";
-import tagConverter from "../../shared/components/tagElement/TagConverter";
+import tagConverterNameToId from "../../util/converter/TagConverterNameToId";
 import LoadingComponent from "../../shared/components/loading/Loading";
 import TagSelect from "../../shared/components/tagElement/Tag";
 
@@ -44,6 +44,7 @@ const HomePage = () => {
         
         dispatch(fetchPosts(searchParams))
         
+        
         const token = localStorage.getItem('token');
         if (token) {
             setAuthenticated(true);
@@ -79,7 +80,7 @@ const HomePage = () => {
     
     const handleTagsChange = async (selectedOptions) => {
         const selectedValues = selectedOptions.map(option => option.value);
-        const idTags = await tagConverter(selectedValues);
+        const idTags = await tagConverterNameToId(selectedValues);
         setForm({...form, tags: idTags});
     };
     
@@ -117,7 +118,7 @@ const HomePage = () => {
                         />
                     </div>
                     <div className="p-2 flex-fill bd-highlight">
-                        <TagSelect handleTagsChange={handleTagsChange}/>
+                        <TagSelect handleTagsChange={handleTagsChange} arrayTagsId={searchParams.getAll('tags')}/>
                     </div>
                 </div>
                 
@@ -130,6 +131,7 @@ const HomePage = () => {
                             className="form-select"
                             aria-label="Default select example"
                             onChange={e => setForm({...form, sorting: e.currentTarget.value})}
+                            value={form.sorting}
                         >
                             <option value="CreateDesc">По дате создания (сначала новые)</option>
                             <option value="CreateAsc">По дате создания (сначала старые)</option>
@@ -145,6 +147,7 @@ const HomePage = () => {
                             aria-label="Recipient's username"
                             aria-describedby="button-addon2"
                             onChange={e => setForm({...form, minReadingTime: e.currentTarget.value})}
+                            value={form.minReadingTime}
                         />
                     </div>
                     <div className="p-2 flex-fill bd-highlight">
@@ -155,13 +158,15 @@ const HomePage = () => {
                             aria-label="Recipient's username"
                             aria-describedby="button-addon2"
                             onChange={e => setForm({...form, maxReadingTime: e.currentTarget.value})}
+                            value={form.maxReadingTime}
                         />
                     </div>
                     <div className="d-flex flex-column">
                         <div className="form-check">
                             <input
                                 className="form-check-input"
-                                type="checkbox" value=""
+                                type="checkbox"
+                                checked={form.onlyMyCommunities}
                                 id="flexCheckDefault"
                                 onClick={e => setForm({...form, onlyMyCommunities: e.currentTarget.checked})}
                             />

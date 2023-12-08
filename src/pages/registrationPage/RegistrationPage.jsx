@@ -3,9 +3,9 @@ import {useEffect, useState} from "react";
 import register from "../../shared/api/register/Registration";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from './style.module.css';
-import notifyWarning from "../../util/notification/error/WarningNotify";
+import notifyWarning from "../../util/notification/warning/WarningNotify";
 import notifyError from "../../util/notification/error/ErrorNotify";
-import successNotify from "../../util/notification/SuccessNotify";
+import successNotify from "../../util/notification/success/SuccessNotify";
 
 
 const RegistrationPage = () => {

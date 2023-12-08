@@ -1,5 +1,5 @@
 import {useState} from "react";
-import formatDateTime from "../../../util/FormatDateTime";
+import timestampToDateTimeConverter from "../../../util/converter/TimestampToDateTimeConverter";
 import styles from './style.module.css';
 import {useNavigate} from "react-router-dom";
 import LikeComponent from "../like/LikeComponent";
@@ -25,7 +25,7 @@ function PostElement({ posts }) {
         <Card className="mt-3">
             <Card.Body>
                 <p>
-                    {posts.author} - {formatDateTime(posts.createTime)}
+                    {posts.author} - {timestampToDateTimeConverter(posts.createTime)}
                     {posts.communityName && ` в сообществе "${posts.communityName}"`}
                 </p>
                 <h4 className={styles.link} onClick={handleTitleClick}>{posts.title}</h4>

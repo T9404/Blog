@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useLocation, useNavigate} from 'react-router-dom';
-import formatDateTime from "../../util/FormatDateTime";
+import timestampToDateTimeConverter from "../../util/converter/TimestampToDateTimeConverter";
 import getPost from "../../shared/api/posts/Post";
 import GroupComment from "../../shared/components/comment/group/GroupComment";
 import createComment from "../../shared/api/comment/CreateComment";
@@ -101,7 +101,7 @@ const IndividualPostPage = () => {
         <>
             <div className="card p-3 m-2">
                 <p>
-                    {post.author} - {formatDateTime(post.createTime)}
+                    {post.author} - {timestampToDateTimeConverter(post.createTime)}
                     {post.communityName && ` в сообществе "${post.communityName}"`}
                 </p>
                 <h4>{post.title}</h4>

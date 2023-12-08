@@ -2,6 +2,7 @@ import {useState} from "react";
 import addLike from "../../api/like/AddLike";
 import deleteLike from "../../api/like/DeleteLike";
 import {useNavigate} from "react-router-dom";
+import notifyError from "../../../util/notification/error/ErrorNotify";
 
 const LikeComponent= ({ post }) => {
     const navigate = useNavigate();
@@ -19,6 +20,8 @@ const LikeComponent= ({ post }) => {
             setLikesCount(isLiked ? likesCount - 1 : likesCount + 1);
         } catch (error) {
             if (error.response.status === 401) {
+                notifyError('Вы не авторизованы, пожалуйста, войдите заново')
+                localStorage.clear();
                 navigate('/login');
             }
         }

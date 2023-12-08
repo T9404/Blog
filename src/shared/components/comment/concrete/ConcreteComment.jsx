@@ -8,7 +8,7 @@ import editComment from "../../../api/comment/EditComment";
 import styles from './style.module.css';
 import deleteComment from "../../../api/comment/DeleteComment";
 
-const ConcreteComment = ({ comment, postId, isNested }) => {
+const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
     const navigate = useNavigate();
     const [expanded, setExpanded] = useState(false);
     const [subComments, setSubComments] = useState([]);
@@ -71,28 +71,34 @@ const ConcreteComment = ({ comment, postId, isNested }) => {
     }, [comment.id, expanded, comment.subComments]);
     
     const handleReplySubmit = async (e) => {
+        e.preventDefault();
         try {
             await createComment(postId, replyContent, comment.id);
             setShowReplyForm(!showReplyForm);
+            updatePost();
         } catch (error) {
             console.error('Error creating comment:', error);
         }
     }
     
     const handleEditSubmit = async (e) => {
+        e.preventDefault();
         setShowEditForm(!showEditForm);
-        
         try {
             await editComment(comment.id, editContent);
             setShowEditForm(!showEditForm);
+            setEditContent('')
+            updatePost();
         } catch (error) {
             console.error('Error editing comment:', error);
         }
     }
     
     const handleDeleteSubmit = async (e) => {
+        e.preventDefault();
         try {
             await deleteComment(comment.id);
+            updatePost();
         } catch (error) {
             localStorage.clear();
             navigate('/login');
@@ -101,6 +107,7 @@ const ConcreteComment = ({ comment, postId, isNested }) => {
     
     return (
         <div key={comment.id} className={isNested ? `border-start border-5 border-primary border-opacity-50 ms-5` : ''}>
+            <div className="ms-1">
             <p>{comment.deleteDate != null ? '[Комментарий удален]' : comment.author}</p>
             <p>{comment.deleteDate != null ? '[Комментарий удален]' : comment.content}
                 {comment.deleteDate == null && comment.modifiedDate && <span className={styles.grayText}>(изменено)</span>}</p>
@@ -118,15 +125,16 @@ const ConcreteComment = ({ comment, postId, isNested }) => {
                                                                 onClick={handleDeleteSubmit}>🗑</button>)}
                 </div>
             </div>
+            </div>
             
             {showReplyForm && (
-                <form onSubmit={handleReplySubmit}>
+                <form onSubmit={handleReplySubmit} className="ms-1">
                     <div className="mb-3">
                         <label htmlFor={`replyContent-${comment.id}`} className="form-label">
                             Ответ на комментарий {comment.author}:
                         </label>
                         <textarea
-                            className="form-control"
+                            className="form-control ml-2"
                             id={`replyContent-${comment.id}`}
                             rows="3"
                             onChange={e => setReplyContent(e.target.value)}
@@ -140,7 +148,7 @@ const ConcreteComment = ({ comment, postId, isNested }) => {
             )}
             
             {showEditForm && (
-                <form onSubmit={handleEditSubmit}>
+                <form onSubmit={handleEditSubmit} className="ms-1">
                     <div className="mb-3">
                         <label htmlFor={`editContent-${comment.id}`} className="form-label">
                             Редактирование комментария {comment.author}:
@@ -170,7 +178,7 @@ const ConcreteComment = ({ comment, postId, isNested }) => {
             
             {expanded && subComments.length > 0 &&
                 subComments.map((subComment) => (
-                    <ConcreteComment key={subComment.id} comment={subComment} postId={postId} isNested={true} />
+                    <ConcreteComment key={subComment.id} comment={subComment} postId={postId} updatePost={updatePost} isNested={true} />
                 ))}
             <hr/>
         </div>

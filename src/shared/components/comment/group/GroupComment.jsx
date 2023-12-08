@@ -1,14 +1,17 @@
-import React, {useState} from "react";
-import formatDateTime from "../../../../util/FormatDateTime";
-import Comment from "../concrete/ConcreteComment";
+import ConcreteComment from "../concrete/ConcreteComment";
+import {useEffect} from "react";
 
-const GroupComment = (post) => {
+const GroupComment = ({post, updatePost}) => {
+    
+    useEffect(() => {
+        console.log("GroupComment")
+    }, []);
     
     return (
         <div>
             <h3>Комментарии</h3>
-            {post.post.comments.map((comment) => (
-                <Comment comment={comment} postId={post.post.id} />
+            {post.comments.map((comment) => (
+                <ConcreteComment comment={comment} postId={post.id} updatePost={updatePost}  />
             ))}
         </div>
     );

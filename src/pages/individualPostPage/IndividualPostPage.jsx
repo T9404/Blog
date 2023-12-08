@@ -10,6 +10,7 @@ import LikeComponent from "../../shared/components/like/LikeComponent";
 import Address from "../../shared/components/address/Address";
 import ConcreteAddress from "../../shared/components/address/Address";
 import styles from "./style.module.css";
+import notifyError from "../../util/notification/error/ErrorNotify";
 
 const IndividualPostPage = () => {
     const navigate = useNavigate();
@@ -56,7 +57,8 @@ const IndividualPostPage = () => {
     }, [showComments]);
     
     
-    const handleCreateComment = async () => {
+    const handleCreateComment = async (e) => {
+        e.preventDefault();
         try {
             const createdComment = await createComment(post.id, comment);
             setPost((prevPost) => ({
@@ -67,8 +69,30 @@ const IndividualPostPage = () => {
             setComment('');
         } catch (error) {
             console.error('Error creating comment:', error);
+            notifyError('Error creating comment: ' + error.message)
         }
     };
+    
+    useEffect(() => {
+    
+    }, [post]);
+    
+    const updatePost = () => {
+        const fetchData = async () => {
+            try {
+                const postData = await getPost(id);
+                setPost(postData);
+            } catch (error) {
+                console.error('Error fetching post:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        fetchData().then();
+        console.log(post)
+        console.log("oik")
+    }
     
     if (loading) {
         return <p>Loading...</p>;
@@ -80,7 +104,7 @@ const IndividualPostPage = () => {
     
     return (
         <>
-            <div className="card">
+            <div className="card p-3 m-2">
                 <p>
                     {post.author} - {formatDateTime(post.createTime)}
                     {post.communityName && ` в сообществе "${post.communityName}"`}
@@ -118,11 +142,13 @@ const IndividualPostPage = () => {
                 </div>
             </div>
             
-            <div className="card">
-                {showComments && <GroupComment post={post} />}
-            </div>
+            {showComments && post && (
+                <div className="card p-3 m-2">
+                    <GroupComment post={post} updatePost={updatePost} />
+                </div>
+            )}
             
-            <div className="card">
+            <div className="card p-3 m-2">
                 <h3>Оставить комментарий</h3>
                 <form>
                     <div className="mb-3">

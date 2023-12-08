@@ -61,13 +61,10 @@ const LoginPage = () => {
                         className="form-control"
                     />
                 </div>
-
-                <div className="d-grid">
+                <div className={"d-flex flex-column"}>
                     <button onSubmit={handleSubmit} type="submit" className="btn btn-primary m-1">
                         Войти
                     </button>
-                </div>
-                <div className="d-grid">
                     <button onClick={() => navigate("/registration")} type="button" className="btn btn-secondary m-1">
                         Зарегистрироваться
                     </button>

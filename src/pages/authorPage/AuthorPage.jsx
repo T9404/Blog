@@ -78,30 +78,29 @@ const AuthorPage = () => {
     }
     
     return (
-        <div>
-            <div>
-                {authors.map((author) => (
+        <div className="row row-cols-1 row-cols-md-2 g-4">
+            {authors.map((author) => (
+                <div key={author.id} className="col">
                     <div
                         className={`card mb-3 ${styles.imageCard}`}
-                        key={author.id}
                         onClick={() => handleCardClick(author.fullName)}
                     >
                         <div className="row no-gutters">
                             <div className="col-md-4">
                                 <div className={styles.imageCardOverlay}>
-                                <img
-                                    src={path + (author.gender === 'Male' ? 'male.png' : 'female.png')}
-                                    className="card-img"
-                                    alt="Gender"
-                                />
+                                    <img
+                                        src={path + (author.gender === 'Male' ? 'male.png' : 'female.png')}
+                                        className="card-img"
+                                        alt="Gender"
+                                    />
                                     {isBestAuthor(author) && (
                                         <img
-                                    src={path + `crown_${isBestAuthor(author)}.svg`}
-                                    className={`card-img ${styles.overlay}`}
-                                    alt="Overlay"
-                                />)}
+                                            src={path + `crown_${isBestAuthor(author)}.svg`}
+                                            className={`card-img ${styles.overlay}`}
+                                            alt="Overlay"
+                                        />
+                                    )}
                                 </div>
-                                
                             </div>
                             <div className="col-md-8">
                                 <div className="card-body">
@@ -123,8 +122,8 @@ const AuthorPage = () => {
                             </div>
                         </div>
                     </div>
-                ))}
-            </div>
+                </div>
+            ))}
         </div>
     );
 };

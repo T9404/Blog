@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosts } from '../../store/action/fetchPosts';
-import { setLoading } from '../../store/reducers/postsSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {fetchPosts} from '../../store/action/fetchPosts';
+import {setLoading} from '../../store/reducers/postsSlice';
 import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
 import PaginationComponent from "../../shared/components/pagination/PaginationComponent";
 import PostElement from "../../shared/components/postElement/PostElement";
@@ -32,9 +32,15 @@ const HomePage = () => {
     useEffect(() => {
         const page = searchParams.get('page') || 1;
         
-        setForm({pageSize: Number(searchParams.get('pageSize')) || 5, tags: searchParams.getAll('tags') || [], searchQuery: searchParams.get('search'),
-            sorting: searchParams.get('sorting') || 'CreateDesc', minReadingTime: searchParams.get('minTime') || '', maxReadingTime: searchParams.get('maxTime') || '',
-            onlyMyCommunities: searchParams.get('onlyMyCommunities') || false});
+        setForm({
+            pageSize: Number(searchParams.get('pageSize')) || 5,
+            tags: searchParams.getAll('tags') || [],
+            searchQuery: searchParams.get('search'),
+            sorting: searchParams.get('sorting') || 'CreateDesc',
+            minReadingTime: searchParams.get('minTime') || '',
+            maxReadingTime: searchParams.get('maxTime') || '',
+            onlyMyCommunities: searchParams.get('onlyMyCommunities') || false
+        });
         
         dispatch(fetchPosts(searchParams))
         
@@ -74,7 +80,7 @@ const HomePage = () => {
     const handleTagsChange = async (selectedOptions) => {
         const selectedValues = selectedOptions.map(option => option.value);
         const idTags = await tagConverter(selectedValues);
-        setForm({ ...form, tags: idTags });
+        setForm({...form, tags: idTags});
     };
     
     if (!posts || !posts.length) {
@@ -90,7 +96,7 @@ const HomePage = () => {
     }
     
     return (
-        <div>
+        <div style={{maxWidth: "92vw"}}>
             <div className="d-flex justify-content-between align-items-center">
                 <h1></h1>
                 {authenticated && (<button className="btn btn-primary">Написать пост</button>)}
@@ -111,7 +117,7 @@ const HomePage = () => {
                         />
                     </div>
                     <div className="p-2 flex-fill bd-highlight">
-                        <TagSelect handleTagsChange={handleTagsChange} />
+                        <TagSelect handleTagsChange={handleTagsChange}/>
                     </div>
                 </div>
                 
@@ -159,7 +165,7 @@ const HomePage = () => {
                                 id="flexCheckDefault"
                                 onClick={e => setForm({...form, onlyMyCommunities: e.currentTarget.checked})}
                             />
-                            <label className="form-check-label" htmlFor="flexCheckDefault">
+                            <label className="form-check-label me-2" htmlFor="flexCheckDefault">
                                 Только мои группы
                             </label>
                         </div>
@@ -168,7 +174,9 @@ const HomePage = () => {
                         <button
                             type="button"
                             className="btn btn-primary"
-                            onClick={() => {handlePageChange(1)}}
+                            onClick={() => {
+                                handlePageChange(1)
+                            }}
                         >
                             Применить
                         </button>
@@ -177,40 +185,38 @@ const HomePage = () => {
             </div>
             
             {posts && posts.posts && posts.posts.length > 0 ? (
-                <>
-                    {<>
-                        {posts.posts.map((post) => (
-                            <PostElement key={post.id} posts={post} />
-                        ))}
-                    </>}
+                <div>
+                    <div>
+                        {posts.posts.map(post => <PostElement key={post.id} posts={post}/>)}
+                    </div>
                     
                     <div className="d-flex flex-column flex-md-row bd-highlight">
-                    <div className="p-2 flex-fill bd-highlight">
-                    <PaginationComponent
-                        currentPage={posts.pagination.current}
-                        onPageChange={handlePageChange}
-                        totalPages={posts.pagination.count}
-                    />
-                    </div>
-                    <div className="p-2 flex-fill bd-highlight">
-                        <label htmlFor="countPosts" className="form-label">
-                            Число постов на странице
-                        </label>
-                        <div className="mb-3">
-                            <select
-                                className="form-select"
-                                aria-label="Default select example"
-                                onChange={(e) => setForm({...form, pageSize: Number(e.currentTarget.value)})}
-                                value={form.pageSize}
-                            >
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                            </select>
+                        <div className="p-2 flex-fill bd-highlight">
+                            <PaginationComponent
+                                currentPage={posts.pagination.current}
+                                onPageChange={handlePageChange}
+                                totalPages={posts.pagination.count}
+                            />
+                        </div>
+                        <div className="p-2 flex-fill bd-highlight">
+                            <label htmlFor="countPosts" className="form-label">
+                                Число постов на странице
+                            </label>
+                            <div className="mb-3">
+                                <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    onChange={(e) => setForm({...form, pageSize: Number(e.currentTarget.value)})}
+                                    value={form.pageSize}
+                                >
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    </div>
-                </>
+                </div>
             ) : (
                 <p>No posts available.</p>
             )}

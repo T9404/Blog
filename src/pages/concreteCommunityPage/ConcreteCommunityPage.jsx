@@ -37,7 +37,6 @@ const ConcreteCommunityPage = () => {
     });
     
     useEffect( () => {
-        console.log("concrete community page")
         const fetchData = async () => {
             try {
                 const communityData = await getConcreteCommunity(id);
@@ -58,16 +57,19 @@ const ConcreteCommunityPage = () => {
             }
         }
         
-        setForm({pageSize: Number(searchParams.get('pageSize')) || 5, tags: searchParams.getAll('tags') || [],
-            sorting: searchParams.get('sorting') || 'CreateDesc'});
+        setForm({
+            pageSize: Number(searchParams.get('pageSize')) || 5,
+            tags: searchParams.getAll('tags') || [],
+            sorting: searchParams.get('sorting') || 'CreateDesc'
+        });
         
         dispatch(fetchGroupPosts(searchParams, id))
         const page = searchParams.get('page') || 1;
         handlePageChange(page)
-        
+        setSearchParams(searchParams);
         
         fetchData();
-        fetchRole().then(() => console.log(role));
+        fetchRole().then();
     }, [dispatch, location.search]);
     
     const handleSubscriberUpdate = (change) => {
@@ -84,14 +86,14 @@ const ConcreteCommunityPage = () => {
     const handleTagsChange = async (selectedOptions) => {
         const selectedValues = selectedOptions.map(option => option.value);
         const idTags = await tagConverter(selectedValues);
-        setForm({ ...form, tags: idTags });
+        setForm({...form, tags: idTags});
     };
     
     const handlePageChange = (page) => {
         const queryParams = {
             page: page,
             pageSize: form.pageSize,
-            sorting: form.sorting || undefined,
+            sorting: form.sorting,
         };
         
         Object.keys(queryParams).forEach(key => queryParams[key] === undefined && delete queryParams[key]);
@@ -182,9 +184,9 @@ const ConcreteCommunityPage = () => {
                                     <option value="LikeDesc">По количеству лайков (по убыванию)</option>
                                 </select>
                             </div>
-                        
+                            
                             <div className="p-2 flex-fill bd-highlight">
-                                <TagSelect handleTagsChange={handleTagsChange} />
+                                <TagSelect handleTagsChange={handleTagsChange}/>
                             </div>
                         </div>
                         <div className="d-flex flex-column">

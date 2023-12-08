@@ -65,10 +65,29 @@ const PostCreationPage = () => {
             newAddressArray.push([newAddressArray.length, "", newAddressArray[newAddressArray.length - 1][0]]);
             return newAddressArray;
         });
-        console.log(addressArray)
     };
     
     const handleSubmitButton = async () => {
+        if (!form.title || !form.timeReading || !form.text || form.tags.length === 0) {
+            notifyError('Пожалуйста, заполните все поля (название, время чтения, текст поста, теги)');
+            return;
+        }
+        
+        if (isNaN(form.timeReading)) {
+            notifyError('Пожалуйста, введите число в поле "Время чтения"');
+            return;
+        }
+        
+        if (form.pictureLink && form.pictureLink !== '' && !form.pictureLink.startsWith('http')) {
+            notifyError('Пожалуйста, введите корректную ссылку на картинку');
+            return;
+        }
+        
+        if (form.text && form.text !== '' && form.text.length < 5) {
+            notifyError('Пожалуйста, введите текст длиннее 4 символов');
+            return;
+        }
+        
         try {
             if (form.id && form.id !== '') {
                 await createPost(form);

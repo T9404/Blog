@@ -48,7 +48,7 @@ const ProfilePage = () => {
 
         const validationErrors = validate(form);
         if (Object.keys(validationErrors).length > 0) {
-            const errorMessage = `${validationErrors?.email || ''} ${validationErrors?.phoneNumber || ''}`;
+            const errorMessage = `${validationErrors?.email || ''} ${validationErrors?.phoneNumber || ''} ${validationErrors?.birthDate || ''}`;
             if (errorMessage.trim() !== '') {
                 notifyError(errorMessage);
                 return;
@@ -74,6 +74,17 @@ const ProfilePage = () => {
 
         if (!phoneRegex.test(values.phoneNumber)) {
             errors.phoneNumber = 'Неверный формат телефона ';
+        }
+        
+        if (values.birthDate === '' || values.birthDate === null) {
+            errors.birthDate = 'Необходимо указать дату рождения';
+        }
+        
+        
+        const birthDate = new Date(values.birthDate);
+        const currentDate = new Date();
+        if (birthDate > currentDate || birthDate.getFullYear() < 1900) {
+            errors.birthDate = 'Неверная дата рождения';
         }
 
         return errors;

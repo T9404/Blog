@@ -47,8 +47,7 @@ const RegistrationPage = () => {
                 console.log("a")
             }
         } catch (error) {
-            notifyError(error)
-            console.log("b")
+            notifyError("Пользователь с таким email уже существует или слабый пароль")
         }
     };
 
@@ -68,6 +67,10 @@ const RegistrationPage = () => {
 
         if (!passwordRegex.test(values.password)) {
             errors.password = 'Пароль должен содержать хотя бы одну цифру\n';
+        }
+        
+        if (new Date(values.birthDate) > new Date() || new Date(values.birthDate).getFullYear() < 1900) {
+            errors.birthDate = 'Неверная дата рождения\n';
         }
 
         return errors;

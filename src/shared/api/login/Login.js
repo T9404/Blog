@@ -15,7 +15,7 @@ const login = async (email, password) => {
             return Promise.reject(Error(errorMessage));
         }
     } catch (error) {
-        throw new Error("Invalid email or password");
+        throw new Error("Неверный логин или пароль");
     }
 };
 

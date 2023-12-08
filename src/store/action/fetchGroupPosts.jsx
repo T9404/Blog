@@ -9,7 +9,7 @@ export const fetchGroupPosts = (searchParams, id) => async (dispatch) => {
                 page: searchParams.get('page') || 1,
                 size: searchParams.get('pageSize') || 5,
                 sorting: searchParams.get('sorting') || 'CreateDesc',
-                tags: searchParams.get('tags') || []
+                tags: searchParams.getAll('tags') || []
             },
             paramsSerializer: (params) => {
                 return qs.stringify(params, { arrayFormat: 'repeat' });

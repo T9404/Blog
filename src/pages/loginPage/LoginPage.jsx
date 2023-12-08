@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import login from "../../shared/api/login/Login";
 import styles from './style.module.css';
@@ -28,6 +28,12 @@ const LoginPage = () => {
             notifyError(error)
         }
     };
+    
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/');
+        }
+    }, []);
 
     return (
         <div className={`mx-auto my-auto ${styles.loginForm}`}>

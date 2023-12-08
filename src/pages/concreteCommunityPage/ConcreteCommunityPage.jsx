@@ -36,8 +36,6 @@ const ConcreteCommunityPage = () => {
         tags: []
     });
     
-    
-    
     useEffect( () => {
         console.log("concrete community page")
         const fetchData = async () => {
@@ -122,6 +120,10 @@ const ConcreteCommunityPage = () => {
         return LoadingComponent();
     }
     
+    const handleWritePost = () => {
+        navigate(`/post/create?groupId=${id}`);
+    }
+    
     return (
         <div>
             {community && (
@@ -130,7 +132,12 @@ const ConcreteCommunityPage = () => {
                     <div className="card-header d-sm-flex justify-content-between">
                         <h1>Группа {community.name}</h1>
                         <div className="card-header d-sm-flex justify-content-between">
-                            {isAdministrator() && <button className="btn btn-primary m-1">Написать пост</button>}
+                            {isAdministrator() &&
+                                <button
+                                    className="btn btn-primary m-1"
+                                    onClick={handleWritePost}
+                                >Написать пост</button>
+                            }
                             <SubscribeButton
                                 groupRole={role}
                                 groupId={community.id}

@@ -7,8 +7,10 @@ import createPost from "../../shared/api/posts/CreatePost";
 import createPersonalPost from "../../shared/api/posts/CreatePersonalPost";
 import notifySuccess from "../../util/notification/SuccessNotify";
 import notifyError from "../../util/notification/error/ErrorNotify";
+import {useSearchParams} from "react-router-dom";
 
 const PostCreationPage = () => {
+    let [searchParams, setSearchParams] = useSearchParams();
     const [addressArray, setAddressArray] = useState([
         [0, "", 0, ""]
     ]);
@@ -37,6 +39,11 @@ const PostCreationPage = () => {
     useEffect(() => {
         console.log(addressArray)
     }, [addressArray]);
+    
+    useEffect(() => {
+        const groupId = searchParams.get('groupId') || '';
+        setForm({...form, id: groupId});
+    }, []);
     
     const changeAddressFunction = (index, data) => {
         setAddressArray((prevAddressArray) => {
@@ -126,7 +133,7 @@ const PostCreationPage = () => {
             </label>
             <div className="d-flex flex-column flex-md-row bd-highlight">
                 <div className="p-2 flex-fill bd-highlight">
-                    <PostCreationSelectGroup handleGroupChange={handleGroupChange} />
+                    <PostCreationSelectGroup handleGroupChange={handleGroupChange} form={form} />
                 </div>
                 <div className="p-2 flex-fill bd-highlight">
                     <TagSelect handleTagsChange={handleTagsChange} />

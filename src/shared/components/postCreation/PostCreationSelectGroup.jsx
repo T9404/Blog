@@ -6,7 +6,7 @@ import notifyError from "../../../util/notification/error/ErrorNotify";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
 
-const PostCreationSelectGroup = ({ handleGroupChange }) => {
+const PostCreationSelectGroup = ({ handleGroupChange, form }) => {
     const [group, setGroup] = useState([]);
     const [groupNames, setGroupNames] = useState([]);
     const navigate = useNavigate();
@@ -32,6 +32,10 @@ const PostCreationSelectGroup = ({ handleGroupChange }) => {
         fetchData();
     }, [navigate]);
     
+    const selectedOption = form.id
+        ? { value: form.id, label: groupNames[group.findIndex(tag => tag.communityId === form.id)] }
+        : null;
+    
     return (
         <div>
             <Select
@@ -42,6 +46,7 @@ const PostCreationSelectGroup = ({ handleGroupChange }) => {
                     ...group.map((tag, index) => ({ value: tag.communityId, label: groupNames[index] })),
                 ]}
                 onChange={handleGroupChange}
+                value={selectedOption}
             />
         </div>
     );

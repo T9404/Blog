@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import register from "../../shared/api/register/Registration";
 import "react-datepicker/dist/react-datepicker.css";
 import styles from './style.module.css';
@@ -19,7 +19,13 @@ const RegistrationPage = () => {
     });
     
     const navigate = useNavigate();
-
+    
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/');
+        }
+    }, []);
+    
     const handleSubmit = async e => {
         e.preventDefault();
 
@@ -66,9 +72,7 @@ const RegistrationPage = () => {
 
         return errors;
     };
-
-
-
+    
     return (
         <div className={`mx-auto my-auto ${styles.registerForm}`}>
             <form onSubmit={handleSubmit} className="shadow p-3 mb-5 bg-body rounded">

@@ -21,7 +21,7 @@ function PostElement({ posts }) {
     }
     
     return (
-        <div className="card">
+        <div className="card p-3 m-2">
             <p>
                 {posts.author} - {formatDateTime(posts.createTime)}
                 {posts.communityName && ` в сообществе "${posts.communityName}"`}

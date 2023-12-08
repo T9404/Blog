@@ -14,6 +14,7 @@ import ConcreteCommunityPage from "../pages/concreteCommunityPage/ConcreteCommun
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NotFoundPage from "../pages/notFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
                   <Route path="/registration" element={<RegistrationPage/>}/>
                   <Route path="/login" element={<LoginPage/>}/>
                   <Route path="/post/:id" element={<IndividualPostPage/>}/>
+                  <Route path="*" element={<NotFoundPage/>}/>
               </Routes>
           </div>
           <Footer/>

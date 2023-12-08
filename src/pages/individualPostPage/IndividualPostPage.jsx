@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useLocation, useNavigate} from 'react-router-dom';
-import {useSelector} from "react-redux";
 import formatDateTime from "../../util/FormatDateTime";
-import {setLoading} from "../../store/reducers/postsSlice";
 import getPost from "../../shared/api/posts/Post";
 import GroupComment from "../../shared/components/comment/group/GroupComment";
 import createComment from "../../shared/api/comment/CreateComment";
 import LikeComponent from "../../shared/components/like/LikeComponent";
-import Address from "../../shared/components/address/Address";
 import ConcreteAddress from "../../shared/components/address/Address";
 import styles from "./style.module.css";
 import notifyError from "../../util/notification/error/ErrorNotify";
@@ -90,8 +87,6 @@ const IndividualPostPage = () => {
         };
         
         fetchData().then();
-        console.log(post)
-        console.log("oik")
     }
     
     if (loading) {

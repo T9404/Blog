@@ -19,6 +19,7 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
     
     const [editContent, setEditContent] = useState('');
     const [showEditForm, setShowEditForm] = useState(false);
+    const [forceUpdate, setForceUpdate] = useState(0);
     
     const toggleText = async () => {
         setExpanded(!expanded);
@@ -54,21 +55,10 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
         }
     }, [showEditForm, comment.content]);
     
-    
     useEffect(() => {
-        const fetchSubComments = async () => {
-            try {
-                const data = await getSubComments(comment.id);
-                setSubComments(data);
-            } catch (error) {
-                console.error('Error fetching sub-comments:', error);
-            }
-        };
-        
-        if (expanded && comment.subComments > 0) {
-            fetchSubComments();
-        }
-    }, [comment.id, expanded, comment.subComments]);
+        console.log("Subcomments updated:", subComments);
+        setForceUpdate(forceUpdate + 1)
+    }, [subComments]);
     
     const handleReplySubmit = async (e) => {
         e.preventDefault();

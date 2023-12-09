@@ -2,3 +2,13 @@
     display: flex;
     alignItems: center
 }
+
+.link {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

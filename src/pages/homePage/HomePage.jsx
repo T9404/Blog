@@ -161,7 +161,7 @@ const HomePage = () => {
                             value={form.maxReadingTime}
                         />
                     </div>
-                    <div className="d-flex flex-column">
+                    {authenticated && (<div className="d-flex flex-column">
                         <div className="form-check">
                             <input
                                 className="form-check-input"
@@ -174,8 +174,8 @@ const HomePage = () => {
                                 Только мои группы
                             </label>
                         </div>
-                    </div>
-                    <div className="d-flex flex-column">
+                    </div>)}
+                    <div className="d-flex flex-column ">
                         <button
                             type="button"
                             className="btn btn-primary"

@@ -1,8 +1,8 @@
 import {useState} from "react";
-import addLike from "../../api/like/AddLike";
-import deleteLike from "../../api/like/DeleteLike";
+import addLike from "../../../api/like/AddLike";
+import deleteLike from "../../../api/like/DeleteLike";
 import {useNavigate} from "react-router-dom";
-import notifyError from "../../../util/notification/error/ErrorNotify";
+import notifyError from "../../../../util/notification/error/ErrorNotify";
 
 const LikeComponent= ({ post }) => {
     const navigate = useNavigate();

@@ -2,7 +2,7 @@ import {useState} from "react";
 import timestampToDateTimeConverter from "../../../util/converter/TimestampToDateTimeConverter";
 import styles from './style.module.css';
 import {useNavigate} from "react-router-dom";
-import LikeComponent from "../like/LikeComponent";
+import LikeComponent from "../button/like/LikeComponent";
 import {Card} from "react-bootstrap";
 
 function PostElement({ posts }) {

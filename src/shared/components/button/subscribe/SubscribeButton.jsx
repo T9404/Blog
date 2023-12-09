@@ -1,7 +1,7 @@
 import {useState} from "react";
-import subscribe from "../../api/group/Subscribe";
-import unsubscribe from "../../api/group/Unsubcribe";
-import notifyError from "../../../util/notification/error/ErrorNotify";
+import subscribe from "../../../api/group/Subscribe";
+import unsubscribe from "../../../api/group/Unsubcribe";
+import notifyError from "../../../../util/notification/error/ErrorNotify";
 import {useNavigate} from "react-router-dom";
 
 const SubscribeButton = ({ groupId, groupRole, onUpdateSubscribers }) => {

@@ -4,10 +4,11 @@ import timestampToDateTimeConverter from "../../util/converter/TimestampToDateTi
 import getPost from "../../shared/api/posts/Post";
 import GroupComment from "../../shared/components/comment/group/GroupComment";
 import createComment from "../../shared/api/comment/CreateComment";
-import LikeComponent from "../../shared/components/like/LikeComponent";
+import LikeComponent from "../../shared/components/button/like/LikeComponent";
 import ConcreteAddress from "../../shared/components/address/Address";
 import styles from "./style.module.css";
 import notifyError from "../../util/notification/error/ErrorNotify";
+import {Card} from "react-bootstrap";
 
 const IndividualPostPage = () => {
     const navigate = useNavigate();
@@ -71,14 +72,13 @@ const IndividualPostPage = () => {
     };
     
     useEffect(() => {
-    
     }, [post]);
     
     const updatePost = () => {
         const fetchData = async () => {
             try {
                 const postData = await getPost(id);
-                setPost(postData);
+                setPost(() => postData);
             } catch (error) {
                 console.error('Error fetching post:', error);
             } finally {
@@ -98,7 +98,7 @@ const IndividualPostPage = () => {
     }
     
     return (
-        <>
+        <div style={{maxWidth: "92vw"}}>
             <div className="card p-3 m-2">
                 <p>
                     {post.author} - {timestampToDateTimeConverter(post.createTime)}
@@ -131,10 +131,10 @@ const IndividualPostPage = () => {
                 )}
                 
                 
-                <div className="card-header d-sm-flex justify-content-between">
-                    <p className={`mb-0`} onClick={handleExpandComments}>&#128172; {post.commentsCount}</p>
+                <Card.Footer className="d-flex justify-content-between align-items-center">
+                    <div className={`${styles.link}`} onClick={handleExpandComments}>&#128172; {post.commentsCount}</div>
                     <LikeComponent post={post} />
-                </div>
+                </Card.Footer>
             </div>
             
             {showComments && post && (
@@ -153,7 +153,7 @@ const IndividualPostPage = () => {
                     <button type="submit" className="btn btn-primary" onClick={handleCreateComment}>Отправить</button>
                 </form>
             </div>
-        </>
+        </div>
     );
 };
 

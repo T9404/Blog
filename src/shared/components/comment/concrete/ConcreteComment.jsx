@@ -19,7 +19,6 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
     
     const [editContent, setEditContent] = useState('');
     const [showEditForm, setShowEditForm] = useState(false);
-    const [forceUpdate, setForceUpdate] = useState(0);
     
     const toggleText = async () => {
         setExpanded(!expanded);
@@ -57,7 +56,7 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
     
     useEffect(() => {
         console.log("Subcomments updated:", subComments);
-        setForceUpdate(forceUpdate + 1)
+        
     }, [subComments]);
     
     const handleReplySubmit = async (e) => {

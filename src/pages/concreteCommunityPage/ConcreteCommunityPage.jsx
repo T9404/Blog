@@ -1,7 +1,7 @@
 import {useLocation, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import getConcreteCommunity from "../../shared/api/community/GetConcreteCommunity";
-import SubscribeButton from "../../shared/components/group/SubscribeButton";
+import SubscribeButton from "../../shared/components/button/subscribe/SubscribeButton";
 import getRole from "../../shared/api/group/GetRole";
 import tagConverterNameToId from "../../util/converter/TagConverterNameToId";
 import PostElement from "../../shared/components/postElement/PostElement";

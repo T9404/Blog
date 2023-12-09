@@ -108,7 +108,6 @@ const PostCreationPage = () => {
             addressArray.splice(0, addressArray.length, [0, "", 0, ""]);
             notifySuccess("Пост успешно создан")
         } catch (error) {
-            console.log(error)
             if (error.message === 'Unauthorized') {
                 notifyError('Ошибка авторизации');
             }

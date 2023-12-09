@@ -1,10 +1,8 @@
-import axios from 'axios';
-
-const BASE_URL = 'https://blog.kreosoft.space/api';
+import getTags from "../../shared/api/tag/GetTags";
 
 const tagConverterNameToId = async (selectedOptions) => {
     try {
-        const response = await axios.get(`${BASE_URL}/tag`);
+        const response = await getTags();
         
         if (Array.isArray(response.data)) {
             const idTags = [];

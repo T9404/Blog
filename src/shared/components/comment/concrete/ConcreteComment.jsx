@@ -7,6 +7,7 @@ import getProfile from "../../../api/profile/GetProfile";
 import editComment from "../../../api/comment/EditComment";
 import styles from './style.module.css';
 import deleteComment from "../../../api/comment/DeleteComment";
+import notifyError from "../../../../util/notification/error/ErrorNotify";
 
 const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
     const navigate = useNavigate();
@@ -16,7 +17,6 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
     const [userFullName, setUserFullName] = useState('');
     
     const [replyContent, setReplyContent] = useState('');
-    
     const [editContent, setEditContent] = useState('');
     const [showEditForm, setShowEditForm] = useState(false);
     
@@ -39,7 +39,7 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
                 const user = await getProfile();
                 setUserFullName(user.fullName);
             } catch (error) {
-                console.error('Error fetching profile:', error);
+                notifyError("Вы не авторизованы, пожалуйста, войдите заново");
             }
         };
         
@@ -56,7 +56,6 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
     
     useEffect(() => {
         console.log("Subcomments updated:", subComments);
-        
     }, [subComments]);
     
     const handleReplySubmit = async (e) => {
@@ -66,7 +65,7 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
             setShowReplyForm(!showReplyForm);
             updatePost();
         } catch (error) {
-            console.error('Error creating comment:', error);
+            notifyError("Ошибка при отправке комментария");
         }
     }
     
@@ -79,7 +78,7 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
             setEditContent('')
             updatePost();
         } catch (error) {
-            console.error('Error editing comment:', error);
+           notifyError("Ошибка при редактировании комментария")
         }
     }
     
@@ -89,8 +88,7 @@ const ConcreteComment = ({ comment, postId, updatePost, isNested }) => {
             await deleteComment(comment.id);
             updatePost();
         } catch (error) {
-            localStorage.clear();
-            navigate('/login');
+            notifyError("Ошибка при удалении комментария")
         }
     }
     

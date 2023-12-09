@@ -14,11 +14,9 @@ const IndividualPostPage = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const location = useLocation();
-    
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showComments, setShowComments] = useState(location.hash === '#comments');
-    
     const [comment, setComment] = useState('');
     
     
@@ -28,18 +26,17 @@ const IndividualPostPage = () => {
                 const postData = await getPost(id);
                 setPost(postData);
             } catch (error) {
-                console.error('Error fetching post:', error);
+                notifyError('Ошибка при загрузке поста: ' + error.message)
             } finally {
                 setLoading(false);
             }
         };
         
-        fetchData();
+        fetchData().then();
     }, [id, post]);
     
     const handleExpandComments = () => {
         setShowComments((prevShowComments) => !prevShowComments);
-        
         const hashFragment = showComments ? '' : '#comments';
         navigate(`/post/${post.id}${hashFragment}`);
     };
@@ -66,7 +63,6 @@ const IndividualPostPage = () => {
             }));
             setComment('');
         } catch (error) {
-            console.error('Error creating comment:', error);
             notifyError('Error creating comment: ' + error.message)
         }
     };
@@ -85,7 +81,6 @@ const IndividualPostPage = () => {
                 setLoading(false);
             }
         };
-        
         fetchData().then();
     }
     

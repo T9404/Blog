@@ -5,7 +5,6 @@ import styles from "./style.module.css";
 const ConcreteGroup = ({ group }) => {
     const navigate = useNavigate();
     
-    
     const navigateToCommunities = () => {
         navigate(`/communities/${group.id}`);
     }

@@ -12,7 +12,7 @@ const getProfile = async () => {
         if (response.status === 200) {
             return response.data;
         } else if (response.status === 401) {
-            throw new Error('Unauthorized');
+            return Promise.reject(Error('Вы не авторизованы'));
         }
     } catch (error) {
         throw error;

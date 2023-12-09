@@ -1,9 +1,9 @@
-import getTags from "../../shared/api/tag/GetTags";
+import axios from 'axios';
 
 const tagConverterNameToId = async (selectedOptions) => {
     try {
-        const response = await getTags();
-        
+        const response = await axios.get(`${process.env.REACT_APP_API}/tag`);
+        console.log(response)
         if (Array.isArray(response.data)) {
             const idTags = [];
             for (let i = 0; i < selectedOptions.length; i++) {

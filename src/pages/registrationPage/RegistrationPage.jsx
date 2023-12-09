@@ -40,8 +40,8 @@ const RegistrationPage = () => {
             if (!result.error) {
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('email', form.email);
-                successNotify('Вы успешно зарегистрировались!')
                 await navigate('/');
+                successNotify('Вы успешно вошли!')
             } else {
                 notifyError(result.message)
                 console.log("a")

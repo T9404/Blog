@@ -70,7 +70,7 @@ const InternalElement = ({data, index, handleChangeAddress}) => {
             {(post && post.length > 0 || index === 0) && (
                 <>
                 <div>
-                    <p>{post[0].objectLevelText}</p>
+                    <p>{post[0]?.objectLevelText}</p>
                 </div>
                 <AsyncSelect
                     cacheOptions

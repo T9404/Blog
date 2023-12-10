@@ -84,6 +84,10 @@ const HomePage = () => {
         setForm({...form, tags: idTags});
     };
     
+    const handleWritePost = () => {
+        navigate('/post/create');
+    }
+    
     if (!posts || !posts.length) {
         setLoading(true);
     }
@@ -100,7 +104,9 @@ const HomePage = () => {
         <div style={{maxWidth: "92vw"}}>
             <div className="d-flex justify-content-between align-items-center">
                 <h1></h1>
-                {authenticated && (<button className="btn btn-primary">Написать пост</button>)}
+                {authenticated &&
+                    (<button className="btn btn-primary" onClick={handleWritePost}>Написать пост</button>)
+                }
             </div>
             
             <div>
